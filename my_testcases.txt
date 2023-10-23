@@ -1,0 +1,28 @@
+\\ Test Case: Keywords
+int char bool float void if else while read print printline return true false class final
+
+\\ Test Case: Identifiers
+x y z a1 b2 c3
+
+\\ Test Case: Literals
+123 123.456 'a' "hello"
+
+\\ Test Case: Operators
+= + - ~ * / < > <= >= == <> || &&
+
+\\ Test Case: Delimiters
+; , ( ) { } [ ] : ?
+
+\\ Test Case: Comments and Whitespace
+\\ This is a single-line comment
+\\* This is a multi-line comment *\\
+
+\\ Test Case: Mixed
+int x = 123;
+char y = 'a';
+
+if (x > 100) {
+
+    print("Hello World!");
+
+}

@@ -1,0 +1,85 @@
+import java_cup.runtime.*;
+
+/**
+Place Terminals Here
+*/
+// Keywords
+terminal String CLASS_KEYWORD, FINAL_KEYWORD, INTEGER_KEYWORD, CHARACTER_KEYWORD, BOOLEAN_KEYWORD, FLOAT_KEYWORD, VOID_KEYWORD;
+terminal String IF_KEYWORD, ELSE_KEYWORD, WHILE_KEYWORD, READ_KEYWORD, PRINT_KEYWORD, PRINTLINE_KEYWORD, RETURN_KEYWORD;
+terminal String TRUE_KEYWORD, FALSE_KEYWORD;
+
+// Literals
+terminal String IDENTIFIER;
+terminal int INTEGER_LITERAL;
+terminal char CHARACTER_LITERAL;
+terminal String STRING_LITERAL;
+terminal double FLOATING_POINT_LITERAL;
+
+// Operators
+terminal String EQUALS_OPERATOR, PLUS_OPERATOR, MINUS_OPERATOR, TILDE_OPERATOR;
+terminal String MULTIPLICATION_OPERATOR, DIVISION_OPERATOR;
+terminal String LESS_THAN_OPERATOR, GREATER_THAN_OPERATOR, LESS_THAN_OR_EQUAL_OPERATOR, GREATER_THAN_OR_EQUAL_OPERATOR;
+terminal String EQUALITY_OPERATOR, NOT_EQUAL_OPERATOR, OR_OPERATOR, AND_OPERATOR;
+
+// Delimiters
+terminal String SEMICOLON_DELIMITER, COMMA_DELIMITER, LEFT_PARENTHESIS, RIGHT_PARENTHESIS;
+terminal String LEFT_BRACKET, RIGHT_BRACKET, LEFT_SQUARE_BRACKET, RIGHT_SQUARE_BRACKET, COLON_DELIMITER, QUESTION_MARK_OPERATOR;
+
+// Non-terminals
+// Non-terminals
+non terminal Program program;
+non terminal Expr expr;
+non terminal Expr numericalExpression;
+
+//Precednce
+// UNARY
+precedence left TILDE_OPERATOR, PLUS_OPERATOR, MINUS_OPERATOR;
+// MATH
+precedence left MULTIPLICATION_OPERATOR, DIVISION_OPERATOR;
+precedence left PLUS_OPERATOR, MINUS_OPERATOR;
+// RELATION
+precedence left LESS_THAN_OPERATOR, GREATER_THAN_OPERATOR, LESS_THAN_OR_EQUAL_OPERATOR, GREATER_THAN_OR_EQUAL_OPERATOR;
+// EQUALITY
+precedence left EQUALITY_OPERATOR, NOT_EQUAL_OPERATOR;
+// LOGICAL
+precedence left AND_OPERATOR;
+precedence left OR_OPERATOR;
+// TERNARY
+precedence right QUESTION_MARK_OPERATOR, COLON_DELIMITER;
+
+
+// Grammar Rules
+start with program;
+
+program ::=
+  expr:e
+  {: RESULT = new Program((NumExpr)e); :}
+;
+
+
+expr ::=
+  numericalExpression:n
+  {: RESULT = n; :}
+|
+  // ... additional rules for expr can be added here
+;
+
+numericalExpression ::=
+  INTEGER_LITERAL:i
+  {: RESULT = new NumExpr(i); :}
+|
+  IDENTIFIER:id
+  {: RESULT = new NumExpr(id); :}
+|
+  numericalExpression:e1 PLUS_OPERATOR numericalExpression:e2
+  {: RESULT = new BinaryExpr(e1, "+", e2); :}
+|
+  numericalExpression:e1 MINUS_OPERATOR numericalExpression:e2
+  {: RESULT = new BinaryExpr(e1, "-", e2); :}
+|
+  numericalExpression:e1 MULTIPLICATION_OPERATOR numericalExpression:e2
+  {: RESULT = new BinaryExpr(e1, "*", e2); :}
+|
+  numericalExpression:e1 DIVISION_OPERATOR numericalExpression:e2
+  {: RESULT = new BinaryExpr(e1, "/", e2); :}
+;
