@@ -69,6 +69,30 @@ binaryExpression ::=
 |
     binaryExpression:b1 DIVISION_OPERATOR binaryExpression:b2
     {: RESULT = new BinaryExpr(b1, "/", b2); :}
+|
+    binaryExpression:b1 LESS_THAN_OPERATOR binaryExpression:b2
+    {: RESULT = new BinaryExpr(b1, "<", b2); :}
+|
+    binaryExpression:b1 GREATER_THAN_OPERATOR binaryExpression:b2
+    {: RESULT = new BinaryExpr(b1, ">", b2); :}
+|
+    binaryExpression:b1 LESS_THAN_OR_EQUAL_OPERATOR binaryExpression:b2
+    {: RESULT = new BinaryExpr(b1, "<=", b2); :}
+|
+    binaryExpression:b1 GREATER_THAN_OR_EQUAL_OPERATOR binaryExpression:b2
+    {: RESULT = new BinaryExpr(b1, ">=", b2); :}
+|
+    binaryExpression:b1 EQUALITY_OPERATOR binaryExpression:b2
+    {: RESULT = new BinaryExpr(b1, "==", b2); :}
+|
+    binaryExpression:b1 NOT_EQUAL_OPERATOR binaryExpression:b2
+    {: RESULT = new BinaryExpr(b1, "<>", b2); :}
+|
+    binaryExpression:b1 OR_OPERATOR binaryExpression:b2
+    {: RESULT = new BinaryExpr(b1, "||", b2); :}
+|
+    binaryExpression:b1 AND_OPERATOR binaryExpression:b2
+    {: RESULT = new BinaryExpr(b1, "&&", b2); :}
 ;
 
 operandExpression ::=
@@ -77,5 +101,4 @@ operandExpression ::=
     |
     INTEGER_LITERAL:n
     {: RESULT = new OperandExpr(n, "Integer"); :}
-
 ;
