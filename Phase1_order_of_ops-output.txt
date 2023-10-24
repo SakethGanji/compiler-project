@@ -1,0 +1,1 @@
+instead expected token classes are [EOF, MINUS_OPERATOR, MULTIPLICATION_OPERATOR, DIVISION_OPERATOR]
