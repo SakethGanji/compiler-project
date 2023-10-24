@@ -31,6 +31,7 @@ non terminal Expr expr;
 non terminal Expr numericalExpression;
 non terminal Expr binaryExpression;
 non terminal Expr operandExpression;
+non terminal Expr unaryExpression;
 
 //Precedence
 precedence left OR_OPERATOR;
@@ -40,6 +41,7 @@ precedence left LESS_THAN_OPERATOR, GREATER_THAN_OPERATOR, LESS_THAN_OR_EQUAL_OP
 precedence left PLUS_OPERATOR, MINUS_OPERATOR;
 precedence left MULTIPLICATION_OPERATOR, DIVISION_OPERATOR;
 precedence right TILDE_OPERATOR;
+precedence right QUESTION_MARK_OPERATOR;
 
 // Grammar Rules
 start with program;
@@ -50,55 +52,89 @@ program ::=
 ;
 
 expr ::=
-    binaryExpression:e
-    {: RESULT = e; :}
+  binaryExpression:e
+  {: RESULT = e; :}
 ;
 
 binaryExpression ::=
-    operandExpression:o
-    {: RESULT = o; :}
+  unaryExpression:u
+  {: RESULT = u; :}
 |
-    binaryExpression:b1 PLUS_OPERATOR binaryExpression:b2
-    {: RESULT = new BinaryExpr(b1, "+", b2); :}
+  binaryExpression:b1 PLUS_OPERATOR binaryExpression:b2
+  {: RESULT = new BinaryExpr(b1, "+", b2); :}
 |
-    binaryExpression:b1 MINUS_OPERATOR binaryExpression:b2
-    {: RESULT = new BinaryExpr(b1, "-", b2); :}
+  binaryExpression:b1 MINUS_OPERATOR binaryExpression:b2
+  {: RESULT = new BinaryExpr(b1, "-", b2); :}
 |
-    binaryExpression:b1 MULTIPLICATION_OPERATOR binaryExpression:b2
-    {: RESULT = new BinaryExpr(b1, "*", b2); :}
+  binaryExpression:b1 MULTIPLICATION_OPERATOR binaryExpression:b2
+  {: RESULT = new BinaryExpr(b1, "*", b2); :}
 |
-    binaryExpression:b1 DIVISION_OPERATOR binaryExpression:b2
-    {: RESULT = new BinaryExpr(b1, "/", b2); :}
+  binaryExpression:b1 DIVISION_OPERATOR binaryExpression:b2
+  {: RESULT = new BinaryExpr(b1, "/", b2); :}
 |
-    binaryExpression:b1 LESS_THAN_OPERATOR binaryExpression:b2
-    {: RESULT = new BinaryExpr(b1, "<", b2); :}
+  binaryExpression:b1 LESS_THAN_OPERATOR binaryExpression:b2
+  {: RESULT = new BinaryExpr(b1, "<", b2); :}
 |
-    binaryExpression:b1 GREATER_THAN_OPERATOR binaryExpression:b2
-    {: RESULT = new BinaryExpr(b1, ">", b2); :}
+  binaryExpression:b1 GREATER_THAN_OPERATOR binaryExpression:b2
+  {: RESULT = new BinaryExpr(b1, ">", b2); :}
 |
-    binaryExpression:b1 LESS_THAN_OR_EQUAL_OPERATOR binaryExpression:b2
-    {: RESULT = new BinaryExpr(b1, "<=", b2); :}
+  binaryExpression:b1 LESS_THAN_OR_EQUAL_OPERATOR binaryExpression:b2
+  {: RESULT = new BinaryExpr(b1, "<=", b2); :}
 |
-    binaryExpression:b1 GREATER_THAN_OR_EQUAL_OPERATOR binaryExpression:b2
-    {: RESULT = new BinaryExpr(b1, ">=", b2); :}
+  binaryExpression:b1 GREATER_THAN_OR_EQUAL_OPERATOR binaryExpression:b2
+  {: RESULT = new BinaryExpr(b1, ">=", b2); :}
 |
-    binaryExpression:b1 EQUALITY_OPERATOR binaryExpression:b2
-    {: RESULT = new BinaryExpr(b1, "==", b2); :}
+  binaryExpression:b1 EQUALITY_OPERATOR binaryExpression:b2
+  {: RESULT = new BinaryExpr(b1, "==", b2); :}
 |
-    binaryExpression:b1 NOT_EQUAL_OPERATOR binaryExpression:b2
-    {: RESULT = new BinaryExpr(b1, "<>", b2); :}
+  binaryExpression:b1 NOT_EQUAL_OPERATOR binaryExpression:b2
+  {: RESULT = new BinaryExpr(b1, "<>", b2); :}
 |
-    binaryExpression:b1 OR_OPERATOR binaryExpression:b2
-    {: RESULT = new BinaryExpr(b1, "||", b2); :}
+  binaryExpression:b1 OR_OPERATOR binaryExpression:b2
+  {: RESULT = new BinaryExpr(b1, "||", b2); :}
 |
-    binaryExpression:b1 AND_OPERATOR binaryExpression:b2
-    {: RESULT = new BinaryExpr(b1, "&&", b2); :}
+  binaryExpression:b1 AND_OPERATOR binaryExpression:b2
+  {: RESULT = new BinaryExpr(b1, "&&", b2); :}
+|
+  binaryExpression:b1 QUESTION_MARK_OPERATOR binaryExpression:b2 COLON_DELIMITER binaryExpression:b3
+  {: RESULT = new TernaryExpr(b1, b2, b3); :}
 ;
 
+
+unaryExpression ::=
+  operandExpression:o
+  {: RESULT = o; :}
+|
+  TILDE_OPERATOR binaryExpression:b
+  {: RESULT = new UnaryExpr("~", b); :}
+|
+  MINUS_OPERATOR binaryExpression:b
+  {: RESULT = new UnaryExpr("-", b); :}
+|
+  PLUS_OPERATOR binaryExpression:b
+  {: RESULT = new UnaryExpr("+", b); :}
+;
+
+
 operandExpression ::=
-    IDENTIFIER:i
-    {: RESULT = new OperandExpr(i, "Identifier"); :}
-    |
-    INTEGER_LITERAL:n
-    {: RESULT = new OperandExpr(n, "Integer"); :}
+  IDENTIFIER:i
+  {: RESULT = new OperandExpr(i, "Identifier"); :}
+|
+  INTEGER_LITERAL:n
+  {: RESULT = new OperandExpr(n, "Integer"); :}
+|
+  CHARACTER_LITERAL:c
+  {: RESULT = new OperandExpr(c, "Character"); :}
+|
+  STRING_LITERAL:s
+  {: RESULT = new OperandExpr(s, "String"); :}
+|
+  FLOATING_POINT_LITERAL:f
+  {: RESULT = new OperandExpr(f, "Float"); :}
+|
+  TRUE_KEYWORD
+  {: RESULT = new OperandExpr(true, "Boolean"); :}
+|
+  FALSE_KEYWORD
+  {: RESULT = new OperandExpr(false, "Boolean"); :}
 ;
