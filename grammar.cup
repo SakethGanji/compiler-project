@@ -26,60 +26,56 @@ terminal String SEMICOLON_DELIMITER, COMMA_DELIMITER, LEFT_PARENTHESIS, RIGHT_PA
 terminal String LEFT_BRACKET, RIGHT_BRACKET, LEFT_SQUARE_BRACKET, RIGHT_SQUARE_BRACKET, COLON_DELIMITER, QUESTION_MARK_OPERATOR;
 
 // Non-terminals
-// Non-terminals
 non terminal Program program;
 non terminal Expr expr;
 non terminal Expr numericalExpression;
+non terminal Expr binaryExpression;
+non terminal Expr operandExpression;
 
-//Precednce
-// UNARY
-precedence left TILDE_OPERATOR, PLUS_OPERATOR, MINUS_OPERATOR;
-// MATH
-precedence left MULTIPLICATION_OPERATOR, DIVISION_OPERATOR;
-precedence left PLUS_OPERATOR, MINUS_OPERATOR;
-// RELATION
-precedence left LESS_THAN_OPERATOR, GREATER_THAN_OPERATOR, LESS_THAN_OR_EQUAL_OPERATOR, GREATER_THAN_OR_EQUAL_OPERATOR;
-// EQUALITY
-precedence left EQUALITY_OPERATOR, NOT_EQUAL_OPERATOR;
-// LOGICAL
-precedence left AND_OPERATOR;
+//Precedence
 precedence left OR_OPERATOR;
-// TERNARY
-precedence right QUESTION_MARK_OPERATOR, COLON_DELIMITER;
-
+precedence left AND_OPERATOR;
+precedence left EQUALITY_OPERATOR, NOT_EQUAL_OPERATOR;
+precedence left LESS_THAN_OPERATOR, GREATER_THAN_OPERATOR, LESS_THAN_OR_EQUAL_OPERATOR, GREATER_THAN_OR_EQUAL_OPERATOR;
+precedence left PLUS_OPERATOR, MINUS_OPERATOR;
+precedence left MULTIPLICATION_OPERATOR, DIVISION_OPERATOR;
+precedence right TILDE_OPERATOR;
 
 // Grammar Rules
 start with program;
 
 program ::=
   expr:e
-  {: RESULT = new Program((NumExpr)e); :}
+  {: RESULT = new Program(e); :}
 ;
-
 
 expr ::=
-  numericalExpression:n
-  {: RESULT = n; :}
-|
-  // ... additional rules for expr can be added here
+    binaryExpression:e
+    {: RESULT = e; :}
 ;
 
-numericalExpression ::=
-  INTEGER_LITERAL:i
-  {: RESULT = new NumExpr(i); :}
+binaryExpression ::=
+    operandExpression:o
+    {: RESULT = o; :}
 |
-  IDENTIFIER:id
-  {: RESULT = new NumExpr(id); :}
+    binaryExpression:b1 PLUS_OPERATOR binaryExpression:b2
+    {: RESULT = new BinaryExpr(b1, "+", b2); :}
 |
-  numericalExpression:e1 PLUS_OPERATOR numericalExpression:e2
-  {: RESULT = new BinaryExpr(e1, "+", e2); :}
+    binaryExpression:b1 MINUS_OPERATOR binaryExpression:b2
+    {: RESULT = new BinaryExpr(b1, "-", b2); :}
 |
-  numericalExpression:e1 MINUS_OPERATOR numericalExpression:e2
-  {: RESULT = new BinaryExpr(e1, "-", e2); :}
+    binaryExpression:b1 MULTIPLICATION_OPERATOR binaryExpression:b2
+    {: RESULT = new BinaryExpr(b1, "*", b2); :}
 |
-  numericalExpression:e1 MULTIPLICATION_OPERATOR numericalExpression:e2
-  {: RESULT = new BinaryExpr(e1, "*", e2); :}
-|
-  numericalExpression:e1 DIVISION_OPERATOR numericalExpression:e2
-  {: RESULT = new BinaryExpr(e1, "/", e2); :}
+    binaryExpression:b1 DIVISION_OPERATOR binaryExpression:b2
+    {: RESULT = new BinaryExpr(b1, "/", b2); :}
+;
+
+operandExpression ::=
+    IDENTIFIER:i
+    {: RESULT = new OperandExpr(i, "Identifier"); :}
+    |
+    INTEGER_LITERAL:n
+    {: RESULT = new OperandExpr(n, "Integer"); :}
+
 ;

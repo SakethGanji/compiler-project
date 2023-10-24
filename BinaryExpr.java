@@ -10,11 +10,11 @@ public class BinaryExpr extends Expr {
     }
 
     public String toString(int t) {
-        return getTabs(t) + "(" + left.toString(t) + " " + operator + " " + right.toString(t) + ")";
+        return getTabs(t) + "(" + left.toString(0) + " " + operator + " " + right.toString(0) + ")";
     }
 
-    // Utility function to generate tabs for indentation
     public String getTabs(int t) {
         return String.join("", java.util.Collections.nCopies(t, "\t"));
     }
 }
+
