@@ -27,6 +27,8 @@ terminal String LEFT_BRACKET, RIGHT_BRACKET, LEFT_SQUARE_BRACKET, RIGHT_SQUARE_B
 
 // Non-terminals
 non terminal Program program;
+non terminal Stmts stmts;
+non terminal Stmt stmt;
 non terminal Expr expr;
 non terminal Expr numericalExpression;
 non terminal Expr binaryExpression;
@@ -47,9 +49,30 @@ precedence right QUESTION_MARK_OPERATOR;
 start with program;
 
 program ::=
-  expr:e
-  {: RESULT = new Program(e); :}
+  stmts:s
+  {: RESULT = new Program(s); :}
 ;
+
+
+stmts ::=
+  stmt:s stmts:ss
+  {: RESULT = new Stmts(s, ss); :}
+|
+  /* Lambda, empty */
+  {: RESULT = new Stmts(); :}
+;
+
+stmt ::=
+  IF_KEYWORD LEFT_PARENTHESIS expr:e RIGHT_PARENTHESIS LEFT_BRACKET stmts:ss1 RIGHT_BRACKET ELSE_KEYWORD LEFT_BRACKET stmts:ss2 RIGHT_BRACKET
+  {: RESULT = new IfStmt(e, ss1, ss2); :}
+|
+  WHILE_KEYWORD LEFT_PARENTHESIS expr:e RIGHT_PARENTHESIS LEFT_BRACKET stmts:ss RIGHT_BRACKET
+  {: RESULT = new WhileStmt(e, ss); :}
+|
+  IDENTIFIER:i EQUALS_OPERATOR expr:e SEMICOLON_DELIMITER
+  {: RESULT = new AssignmentStmt(i, e); :}
+;
+
 
 expr ::=
   binaryExpression:e

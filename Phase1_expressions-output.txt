@@ -1,2 +1,11 @@
 Program:
-	((((Identifier:varId + ((Integer:5 * Integer:6) / Integer:7)) - Integer:2) - String:"hi") + Boolean:true)
+	if ((Identifier:x > Integer:5)) {
+		result = String:"greater";
+	} else {
+		result = String:"less";
+	}
+	while ((Identifier:x < Integer:10)) {
+		x = (Identifier:x + Integer:1);
+	}
+	y = ((Identifier:x * Integer:2) + Integer:3);
+
