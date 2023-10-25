@@ -1,30 +1,29 @@
 import java_cup.runtime.*;
 
-/**
-Place Terminals Here
+/*
+  =====================
+  Terminals
+  =====================
 */
+
 // Keywords
 terminal String CLASS_KEYWORD, FINAL_KEYWORD, INTEGER_KEYWORD, CHARACTER_KEYWORD, BOOLEAN_KEYWORD, FLOAT_KEYWORD, VOID_KEYWORD;
 terminal String IF_KEYWORD, ELSE_KEYWORD, WHILE_KEYWORD, READ_KEYWORD, PRINT_KEYWORD, PRINTLINE_KEYWORD, RETURN_KEYWORD;
 terminal String TRUE_KEYWORD, FALSE_KEYWORD;
-
 // Literals
 terminal String IDENTIFIER;
 terminal int INTEGER_LITERAL;
 terminal char CHARACTER_LITERAL;
 terminal String STRING_LITERAL;
 terminal double FLOATING_POINT_LITERAL;
-
 // Operators
 terminal String EQUALS_OPERATOR, PLUS_OPERATOR, MINUS_OPERATOR, TILDE_OPERATOR;
 terminal String MULTIPLICATION_OPERATOR, DIVISION_OPERATOR;
 terminal String LESS_THAN_OPERATOR, GREATER_THAN_OPERATOR, LESS_THAN_OR_EQUAL_OPERATOR, GREATER_THAN_OR_EQUAL_OPERATOR;
 terminal String EQUALITY_OPERATOR, NOT_EQUAL_OPERATOR, OR_OPERATOR, AND_OPERATOR;
-
 // Delimiters
 terminal String SEMICOLON_DELIMITER, COMMA_DELIMITER, LEFT_PARENTHESIS, RIGHT_PARENTHESIS;
 terminal String LEFT_BRACKET, RIGHT_BRACKET, LEFT_SQUARE_BRACKET, RIGHT_SQUARE_BRACKET, COLON_DELIMITER, QUESTION_MARK_OPERATOR;
-
 // Non-terminals
 non terminal Program program;
 non terminal Stmts stmts;
@@ -35,7 +34,12 @@ non terminal Expr binaryExpression;
 non terminal Expr operandExpression;
 non terminal Expr unaryExpression;
 
-//Precedence
+/*
+  =====================
+  Precedence
+  =====================
+*/
+
 precedence left OR_OPERATOR;
 precedence left AND_OPERATOR;
 precedence left EQUALITY_OPERATOR, NOT_EQUAL_OPERATOR;
@@ -45,7 +49,12 @@ precedence left MULTIPLICATION_OPERATOR, DIVISION_OPERATOR;
 precedence right TILDE_OPERATOR;
 precedence right QUESTION_MARK_OPERATOR;
 
-// Grammar Rules
+/*
+  =====================
+  Grammar Rules
+  =====================
+*/
+
 start with program;
 
 program ::=
