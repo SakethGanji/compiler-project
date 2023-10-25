@@ -40,10 +40,10 @@ non terminal ReadList readList;
 non terminal PrintList printList;
 non terminal PrintLineList printLineList;
 non terminal Expr expr;
-non terminal Expr numericalExpression;
 non terminal Expr binaryExpression;
 non terminal Expr operandExpression;
 non terminal Expr unaryExpression;
+non terminal String binaryOp;
 
 /*
   =====================
@@ -142,69 +142,6 @@ printLineList ::=
 ;
 
 expr ::=
-  binaryExpression:e
-  {: RESULT = e; :}
-;
-
-binaryExpression ::=
-  unaryExpression:u
-  {: RESULT = u; :}
-|
-  binaryExpression:b1 PLUS_OPERATOR binaryExpression:b2
-  {: RESULT = new BinaryExpr(b1, "+", b2); :}
-|
-  binaryExpression:b1 MINUS_OPERATOR binaryExpression:b2
-  {: RESULT = new BinaryExpr(b1, "-", b2); :}
-|
-  binaryExpression:b1 MULTIPLICATION_OPERATOR binaryExpression:b2
-  {: RESULT = new BinaryExpr(b1, "*", b2); :}
-|
-  binaryExpression:b1 DIVISION_OPERATOR binaryExpression:b2
-  {: RESULT = new BinaryExpr(b1, "/", b2); :}
-|
-  binaryExpression:b1 LESS_THAN_OPERATOR binaryExpression:b2
-  {: RESULT = new BinaryExpr(b1, "<", b2); :}
-|
-  binaryExpression:b1 GREATER_THAN_OPERATOR binaryExpression:b2
-  {: RESULT = new BinaryExpr(b1, ">", b2); :}
-|
-  binaryExpression:b1 LESS_THAN_OR_EQUAL_OPERATOR binaryExpression:b2
-  {: RESULT = new BinaryExpr(b1, "<=", b2); :}
-|
-  binaryExpression:b1 GREATER_THAN_OR_EQUAL_OPERATOR binaryExpression:b2
-  {: RESULT = new BinaryExpr(b1, ">=", b2); :}
-|
-  binaryExpression:b1 EQUALITY_OPERATOR binaryExpression:b2
-  {: RESULT = new BinaryExpr(b1, "==", b2); :}
-|
-  binaryExpression:b1 NOT_EQUAL_OPERATOR binaryExpression:b2
-  {: RESULT = new BinaryExpr(b1, "<>", b2); :}
-|
-  binaryExpression:b1 OR_OPERATOR binaryExpression:b2
-  {: RESULT = new BinaryExpr(b1, "||", b2); :}
-|
-  binaryExpression:b1 AND_OPERATOR binaryExpression:b2
-  {: RESULT = new BinaryExpr(b1, "&&", b2); :}
-|
-  binaryExpression:b1 QUESTION_MARK_OPERATOR binaryExpression:b2 COLON_DELIMITER binaryExpression:b3
-  {: RESULT = new TernaryExpr(b1, b2, b3); :}
-;
-
-unaryExpression ::=
-  operandExpression:o
-  {: RESULT = o; :}
-|
-  TILDE_OPERATOR binaryExpression:b
-  {: RESULT = new UnaryExpr("~", b); :}
-|
-  MINUS_OPERATOR binaryExpression:b
-  {: RESULT = new UnaryExpr("-", b); :}
-|
-  PLUS_OPERATOR binaryExpression:b
-  {: RESULT = new UnaryExpr("+", b); :}
-;
-
-operandExpression ::=
   IDENTIFIER:i
   {: RESULT = new OperandExpr(i, "Identifier"); :}
 |
@@ -225,4 +162,57 @@ operandExpression ::=
 |
   FALSE_KEYWORD
   {: RESULT = new OperandExpr(false, "Boolean"); :}
+|
+  TILDE_OPERATOR expr:e
+  {: RESULT = new UnaryExpr("~", e); :}
+|
+  MINUS_OPERATOR expr:e
+  {: RESULT = new UnaryExpr("-", e); :}
+|
+  PLUS_OPERATOR expr:e
+  {: RESULT = new UnaryExpr("+", e); :}
+|
+  expr:e1 binaryOp:op expr:e2
+  {: RESULT = new BinaryExpr(e1, op, e2); :}
+|
+  expr:e1 QUESTION_MARK_OPERATOR expr:e2 COLON_DELIMITER expr:e3
+  {: RESULT = new TernaryExpr(e1, e2, e3); :}
+;
+
+binaryOp ::=
+  MULTIPLICATION_OPERATOR
+  {: RESULT = "*"; :}
+|
+  DIVISION_OPERATOR
+  {: RESULT = "/"; :}
+|
+  PLUS_OPERATOR
+  {: RESULT = "+"; :}
+|
+  MINUS_OPERATOR
+  {: RESULT = "-"; :}
+|
+  LESS_THAN_OPERATOR
+  {: RESULT = "<"; :}
+|
+  GREATER_THAN_OPERATOR
+  {: RESULT = ">"; :}
+|
+  LESS_THAN_OR_EQUAL_OPERATOR
+  {: RESULT = "<="; :}
+|
+  GREATER_THAN_OR_EQUAL_OPERATOR
+  {: RESULT = ">="; :}
+|
+  EQUALITY_OPERATOR
+  {: RESULT = "=="; :}
+|
+  NOT_EQUAL_OPERATOR
+  {: RESULT = "<>"; :}
+|
+  OR_OPERATOR
+  {: RESULT = "||"; :}
+|
+  AND_OPERATOR
+  {: RESULT = "&&"; :}
 ;

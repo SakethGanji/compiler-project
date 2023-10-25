@@ -8,7 +8,7 @@ Program:
 	while ((Identifier:x < Integer:10)) {
 		x = (Identifier:x + Integer:1);
 	}
-	y = ((Identifier:x * Integer:2) + Integer:3);
+	y = (Identifier:x * (Integer:2 + (Integer:3 - (Boolean:true + String:"false"))));
 	read (x, y);
 	print (Identifier:x, Integer:5);
 	printline (String:"Hello, world", Identifier:x, Identifier:y);
