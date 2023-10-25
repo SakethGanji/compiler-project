@@ -24,7 +24,13 @@ terminal String EQUALITY_OPERATOR, NOT_EQUAL_OPERATOR, OR_OPERATOR, AND_OPERATOR
 // Delimiters
 terminal String SEMICOLON_DELIMITER, COMMA_DELIMITER, LEFT_PARENTHESIS, RIGHT_PARENTHESIS;
 terminal String LEFT_BRACKET, RIGHT_BRACKET, LEFT_SQUARE_BRACKET, RIGHT_SQUARE_BRACKET, COLON_DELIMITER, QUESTION_MARK_OPERATOR;
-// Non-terminals
+
+/*
+  =====================
+  Non-Terminals
+  =====================
+*/
+
 non terminal Program program;
 non terminal Stmts stmts;
 non terminal Stmt stmt;
