@@ -35,6 +35,10 @@ non terminal Program program;
 non terminal Stmts stmts;
 non terminal Stmt stmt;
 non terminal IfEnd ifEnd;
+non terminal Name name;
+non terminal ReadList readList;
+non terminal PrintList printList;
+non terminal PrintLineList printLineList;
 non terminal Expr expr;
 non terminal Expr numericalExpression;
 non terminal Expr binaryExpression;
@@ -69,7 +73,6 @@ program ::=
   {: RESULT = new Program(s); :}
 ;
 
-
 stmts ::=
   stmt:s stmts:ss
   {: RESULT = new Stmts(s, ss); :}
@@ -85,17 +88,59 @@ stmt ::=
   WHILE_KEYWORD LEFT_PARENTHESIS expr:e RIGHT_PARENTHESIS LEFT_BRACKET stmts:ss RIGHT_BRACKET
   {: RESULT = new WhileStmt(e, ss); :}
 |
-  IDENTIFIER:i EQUALS_OPERATOR expr:e SEMICOLON_DELIMITER
-  {: RESULT = new AssignmentStmt(i, e); :}
+  name:n EQUALS_OPERATOR expr:e SEMICOLON_DELIMITER
+  {: RESULT = new AssignmentStmt(n, e); :}
+|
+  READ_KEYWORD LEFT_PARENTHESIS readList:rl RIGHT_PARENTHESIS SEMICOLON_DELIMITER
+  {: RESULT = new ReadStmt(rl); :}
+|
+  PRINT_KEYWORD LEFT_PARENTHESIS printList:pl RIGHT_PARENTHESIS SEMICOLON_DELIMITER
+  {: RESULT = new PrintStmt(pl); :}
+|
+  PRINTLINE_KEYWORD LEFT_PARENTHESIS printList:pll RIGHT_PARENTHESIS SEMICOLON_DELIMITER
+  {: RESULT = new PrintLineStmt(pll); :}
 ;
 
 ifEnd ::=
   ELSE_KEYWORD LEFT_BRACKET stmts:ss RIGHT_BRACKET
   {: RESULT = new IfEnd(ss); :}
 |
-  /* Lambda, empty */
+  /* Lambda */
   {: RESULT = new IfEnd(); :}
 ;
+
+name ::=
+  IDENTIFIER:i
+  {: RESULT = new Name(i, null); :}
+|
+  IDENTIFIER:i LEFT_SQUARE_BRACKET expr:e RIGHT_SQUARE_BRACKET
+  {: RESULT = new Name(i, e); :}
+;
+
+readList ::=
+  name:n COMMA_DELIMITER readList:rl
+  {: RESULT = new ReadList(n, rl); :}
+|
+  name:n
+  {: RESULT = new ReadList(n, null); :}
+;
+
+printList ::=
+  expr:e COMMA_DELIMITER printList:pl
+  {: RESULT = new PrintList(e, pl); :}
+|
+  expr:e
+  {: RESULT = new PrintList(e, null); :}
+;
+
+printLineList ::=
+  printList:pl
+  {: RESULT = new PrintLineList(pl); :}
+|
+  /* Lambda, empty */
+  {: RESULT = new PrintLineList(null); :}
+;
+
 expr ::=
   binaryExpression:e
   {: RESULT = e; :}

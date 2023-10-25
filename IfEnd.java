@@ -1,4 +1,4 @@
-public class IfEnd extends Token {
+public class IfEnd extends Stmt {
     private Stmts elseBlock;
 
     public IfEnd(Stmts elseBlock) {
