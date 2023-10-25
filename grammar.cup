@@ -73,7 +73,6 @@ stmt ::=
   {: RESULT = new AssignmentStmt(i, e); :}
 ;
 
-
 expr ::=
   binaryExpression:e
   {: RESULT = e; :}
@@ -123,7 +122,6 @@ binaryExpression ::=
   {: RESULT = new TernaryExpr(b1, b2, b3); :}
 ;
 
-
 unaryExpression ::=
   operandExpression:o
   {: RESULT = o; :}
@@ -137,7 +135,6 @@ unaryExpression ::=
   PLUS_OPERATOR binaryExpression:b
   {: RESULT = new UnaryExpr("+", b); :}
 ;
-
 
 operandExpression ::=
   IDENTIFIER:i

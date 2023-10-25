@@ -39,7 +39,7 @@ public class ScannerTest{
         parser parser = new parser(lexer);
         Program program = null;
         try {
-          program = (Program) parser.debug_parse().value;
+          program = (Program) parser.parse().value;
           System.out.print(program.toString(0));
         }
         catch (Exception e) {

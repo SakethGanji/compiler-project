@@ -2,13 +2,11 @@ public class OperandExpr extends Expr {
   String type;
   Object value;
 
-  // Constructor with both value and type
   public OperandExpr(Object val, String t) {
     this.value = val;
     this.type = t;
   }
 
-  // Overloaded constructor with just the value
   public OperandExpr(Object val) {
     this.value = val;
     // You can set a default type here if you want,
