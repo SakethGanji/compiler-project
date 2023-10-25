@@ -34,6 +34,7 @@ terminal String LEFT_BRACKET, RIGHT_BRACKET, LEFT_SQUARE_BRACKET, RIGHT_SQUARE_B
 non terminal Program program;
 non terminal Stmts stmts;
 non terminal Stmt stmt;
+non terminal IfEnd ifEnd;
 non terminal Expr expr;
 non terminal Expr numericalExpression;
 non terminal Expr binaryExpression;
@@ -78,8 +79,8 @@ stmts ::=
 ;
 
 stmt ::=
-  IF_KEYWORD LEFT_PARENTHESIS expr:e RIGHT_PARENTHESIS LEFT_BRACKET stmts:ss1 RIGHT_BRACKET ELSE_KEYWORD LEFT_BRACKET stmts:ss2 RIGHT_BRACKET
-  {: RESULT = new IfStmt(e, ss1, ss2); :}
+  IF_KEYWORD LEFT_PARENTHESIS expr:e RIGHT_PARENTHESIS LEFT_BRACKET stmts:ss RIGHT_BRACKET ifEnd:ie
+  {: RESULT = new IfStmt(e, ss, ie); :}
 |
   WHILE_KEYWORD LEFT_PARENTHESIS expr:e RIGHT_PARENTHESIS LEFT_BRACKET stmts:ss RIGHT_BRACKET
   {: RESULT = new WhileStmt(e, ss); :}
@@ -88,6 +89,13 @@ stmt ::=
   {: RESULT = new AssignmentStmt(i, e); :}
 ;
 
+ifEnd ::=
+  ELSE_KEYWORD LEFT_BRACKET stmts:ss RIGHT_BRACKET
+  {: RESULT = new IfEnd(ss); :}
+|
+  /* Lambda, empty */
+  {: RESULT = new IfEnd(); :}
+;
 expr ::=
   binaryExpression:e
   {: RESULT = e; :}

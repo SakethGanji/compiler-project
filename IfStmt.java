@@ -1,19 +1,18 @@
-class IfStmt extends Stmt {
+public class IfStmt extends Stmt {
     private Expr condition;
     private Stmts thenBlock;
-    private Stmts elseBlock;
+    private IfEnd ifEnd;
 
-    public IfStmt(Expr condition, Stmts thenBlock, Stmts elseBlock) {
+    public IfStmt(Expr condition, Stmts thenBlock, IfEnd ifEnd) {
         this.condition = condition;
         this.thenBlock = thenBlock;
-        this.elseBlock = elseBlock;
+        this.ifEnd = ifEnd;
     }
 
     public String toString(int t) {
         return getTabs(t) + "if (" + condition.toString(0) + ") {\n" +
-                thenBlock.toString(t+1) +
-                getTabs(t) + "} else {\n" +
-                elseBlock.toString(t+1) +
-                getTabs(t) + "}\n";
+                thenBlock.toString(t + 1) +
+                getTabs(t) + "}\n" +
+                ifEnd.toString(t);  // Updated to use IfEnd's toString
     }
 }
