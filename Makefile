@@ -61,13 +61,13 @@ $(foreach test,$(P2_P1_TESTS),$(eval $(test): $(P2P1_DIR)$(test).txt))
 
 # Rule for Part 1 test cases
 TestCases/part1/%.txt: all
-	$(JAVA) -cp $(CP) $(P1_CLASS) $@ > $(P1_DIR)/$*-output.txt
-	$(call ECHO_AND_OUTPUT,$@,$(P1_DIR)/$*-output.txt)
+	$(JAVA) -cp $(CP) $(P1_CLASS) $@ > $(P1_DIR)$*-output.txt
+	$(call ECHO_AND_OUTPUT,$@,$(P1_DIR)$*-output.txt)
 
 # Rule for Part 2 Phase 1 test cases
 TestCases/part2phase1/%.txt: all
-	$(JAVA) -cp $(CP) $(P2P1_CLASS) $@ > $(P2P1_DIR)/$*-output.txt
-	$(call ECHO_AND_OUTPUT,$@,$(P2P1_DIR)/$*-output.txt)
+	$(JAVA) -cp $(CP) $(P2P1_CLASS) $@ > $(P2P1_DIR)$*-output.txt
+	$(call ECHO_AND_OUTPUT,$@,$(P2P1_DIR)$*-output.txt)
 
 # ====================
 # Utility Functions

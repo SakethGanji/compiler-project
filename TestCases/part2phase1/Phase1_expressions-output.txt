@@ -1,22 +1,16 @@
 Program:
-	if ((Identifier:x > Integer:5)) {
-		Identifier:result = String:"greater";
-	}
-	else {
-		Identifier:result = String:"less";
-	}
-	while ((Identifier:x < Integer:10)) {
-		Identifier:x = (Identifier:x + Integer:1);
-	}
-	Identifier:y = (Identifier:x * (Integer:2 + (Integer:3 - (Boolean:true + String:"false"))));
-	read (Identifier:x, Identifier:y);
-	print (Identifier:x, Integer:5);
-	printline (String:"Hello, world", Identifier:x, Identifier:y);
-	call();
-	functionName(Identifier:x, Identifier:y);
-	functionName(String:"true", Boolean:false, Integer:5);
-	return ;
-	return Integer:5;
-	Identifier:Name++;
-	Identifier:saketh--;
+	Identifier:x = Character:a;
+	Identifier:x = String:"a";
+	Identifier:x = Float:1.1;
+	Identifier:x = Boolean:true;
+	Identifier:x = Boolean:false;
+	Identifier:x = (Identifier:x);
+	Identifier:x = (~Identifier:x);
+	Identifier:x = (-Identifier:x);
+	Identifier:x = (+Identifier:x);
+	Identifier:x = (int)Identifier:x;
+	Identifier:x = (Identifier:x + Identifier:x);
+	Identifier:x = (Identifier:x * Identifier:x);
+	Identifier:x = (Identifier:x > Identifier:x);
+	Identifier:x = ((Identifier:x ? Identifier:x : Identifier:x));
 

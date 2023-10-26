@@ -77,7 +77,7 @@ whitespace = [ \n\t\r]
 {identifier}                { return newSym(sym.IDENTIFIER, yytext()); }
 {integer_literal}           { return newSym(sym.INTEGER_LITERAL, Integer.valueOf(yytext())); }
 {floating_point_literal}    { return newSym(sym.FLOATING_POINT_LITERAL, Double.valueOf(yytext())); }
-{character_literal}         { return newSym(sym.CHARACTER_LITERAL, yytext()); }
+{character_literal}         { return newSym(sym.CHARACTER_LITERAL, yytext().charAt(1)); }
 {string_literal}            { return newSym(sym.STRING_LITERAL, yytext()); }
 
 "="                         { return newSym(sym.EQUALS_OPERATOR, "="); }

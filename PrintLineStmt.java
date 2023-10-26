@@ -1,7 +1,7 @@
 public class PrintLineStmt extends Stmt {
-    private PrintList printLineList;
+    private PrintLineList printLineList;
 
-    public PrintLineStmt(PrintList printLineList) {
+    public PrintLineStmt(PrintLineList printLineList) {
         this.printLineList = printLineList;
     }
 

@@ -8,6 +8,11 @@ public class PrintList extends Token {
         this.next = next;
     }
 
+    public PrintList(Expr expr) {
+        this.expr = expr;
+        this.next = null;
+    }
+
     public String toString(int t) {
         String s = expr.toString(0);
         if (next != null) {
