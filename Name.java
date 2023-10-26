@@ -1,4 +1,4 @@
-public class Name extends Token {
+public class Name extends Expr {
     private String identifier;
     private Expr expr;
 
@@ -8,10 +8,12 @@ public class Name extends Token {
     }
 
     public String toString(int t) {
+        String prefix = "Identifier:";
         if (expr != null) {
-            return identifier + "[" + expr.toString(0) + "]";
+            return prefix + identifier + "[" + expr.toString(0) + "]";
         } else {
-            return identifier;
+            return prefix + identifier;
         }
     }
+
 }

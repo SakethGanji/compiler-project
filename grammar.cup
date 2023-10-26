@@ -142,8 +142,8 @@ printLineList ::=
 ;
 
 expr ::=
-  IDENTIFIER:i
-  {: RESULT = new OperandExpr(i, "Identifier"); :}
+  name:n
+  {: RESULT = n; :}
 |
   INTEGER_LITERAL:n
   {: RESULT = new OperandExpr(n, "Integer"); :}

@@ -1,15 +1,15 @@
 Program:
 	if ((Identifier:x > Integer:5)) {
-		result = String:"greater";
+		Identifier:result = String:"greater";
 	}
 	else {
-		result = String:"less";
+		Identifier:result = String:"less";
 	}
 	while ((Identifier:x < Integer:10)) {
-		x = (Identifier:x + Integer:1);
+		Identifier:x = (Identifier:x + Integer:1);
 	}
-	y = (Identifier:x * (Integer:2 + (Integer:3 - (Boolean:true + String:"false"))));
-	read (x, y);
+	Identifier:y = (Identifier:x * (Integer:2 + (Integer:3 - (Boolean:true + String:"false"))));
+	read (Identifier:x, Identifier:y);
 	print (Identifier:x, Integer:5);
 	printline (String:"Hello, world", Identifier:x, Identifier:y);
 
