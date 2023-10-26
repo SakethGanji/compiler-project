@@ -104,6 +104,8 @@ whitespace = [ \n\t\r]
 "]"                         { return newSym(sym.RIGHT_SQUARE_BRACKET, "]"); }
 ":"                         { return newSym(sym.COLON_DELIMITER, ":"); }
 "?"                         { return newSym(sym.QUESTION_MARK_OPERATOR, "?"); }
+"++"                        { return newSym(sym.INCREMENT_OPERATOR, "++"); }
+"--"                        { return newSym(sym.DECREMENT_OPERATOR, "--"); }
 
 .                           { System.out.println("Illegal char, '" + yytext() +
                     "' line: " + yyline + ", column: " + yycolumn); }

@@ -6,24 +6,23 @@ import java_cup.runtime.*;
   =====================
 */
 
-// Keywords
 terminal String CLASS_KEYWORD, FINAL_KEYWORD, INTEGER_KEYWORD, CHARACTER_KEYWORD, BOOLEAN_KEYWORD, FLOAT_KEYWORD, VOID_KEYWORD;
 terminal String IF_KEYWORD, ELSE_KEYWORD, WHILE_KEYWORD, READ_KEYWORD, PRINT_KEYWORD, PRINTLINE_KEYWORD, RETURN_KEYWORD;
 terminal String TRUE_KEYWORD, FALSE_KEYWORD;
-// Literals
 terminal String IDENTIFIER;
 terminal int INTEGER_LITERAL;
 terminal char CHARACTER_LITERAL;
 terminal String STRING_LITERAL;
 terminal double FLOATING_POINT_LITERAL;
-// Operators
 terminal String EQUALS_OPERATOR, PLUS_OPERATOR, MINUS_OPERATOR, TILDE_OPERATOR;
 terminal String MULTIPLICATION_OPERATOR, DIVISION_OPERATOR;
 terminal String LESS_THAN_OPERATOR, GREATER_THAN_OPERATOR, LESS_THAN_OR_EQUAL_OPERATOR, GREATER_THAN_OR_EQUAL_OPERATOR;
 terminal String EQUALITY_OPERATOR, NOT_EQUAL_OPERATOR, OR_OPERATOR, AND_OPERATOR;
-// Delimiters
 terminal String SEMICOLON_DELIMITER, COMMA_DELIMITER, LEFT_PARENTHESIS, RIGHT_PARENTHESIS;
 terminal String LEFT_BRACKET, RIGHT_BRACKET, LEFT_SQUARE_BRACKET, RIGHT_SQUARE_BRACKET, COLON_DELIMITER, QUESTION_MARK_OPERATOR;
+
+terminal INCREMENT_OPERATOR, DECREMENT_OPERATOR, PREFIX_PLUS_OPERATOR, PREFIX_MINUS_OPERATOR;
+terminal String TYPE_CAST;
 
 /*
   =====================
@@ -51,15 +50,16 @@ non terminal String binaryOp;
   =====================
 */
 
+precedence right QUESTION_MARK_OPERATOR, COLON_DELIMITER;
 precedence left OR_OPERATOR;
 precedence left AND_OPERATOR;
 precedence left EQUALITY_OPERATOR, NOT_EQUAL_OPERATOR;
 precedence left LESS_THAN_OPERATOR, GREATER_THAN_OPERATOR, LESS_THAN_OR_EQUAL_OPERATOR, GREATER_THAN_OR_EQUAL_OPERATOR;
 precedence left PLUS_OPERATOR, MINUS_OPERATOR;
 precedence left MULTIPLICATION_OPERATOR, DIVISION_OPERATOR;
-precedence right TILDE_OPERATOR;
-precedence right QUESTION_MARK_OPERATOR;
-precedence left LEFT_PARENTHESIS, RIGHT_PARENTHESIS;
+precedence left TYPE_CAST;
+precedence right TILDE_OPERATOR, PREFIX_PLUS_OPERATOR, PREFIX_MINUS_OPERATOR, INCREMENT_OPERATOR, DECREMENT_OPERATOR;
+precedence left LEFT_PARENTHESIS, RIGHT_PARENTHESIS, LEFT_SQUARE_BRACKET, RIGHT_SQUARE_BRACKET;
 
 /*
   =====================
@@ -136,10 +136,10 @@ stmt ::=
   RETURN_KEYWORD expr:e SEMICOLON_DELIMITER
   {: RESULT = new ReturnStmt(e); :}
 |
-  name:n PLUS_OPERATOR PLUS_OPERATOR SEMICOLON_DELIMITER
+  name:n INCREMENT_OPERATOR SEMICOLON_DELIMITER
   {: RESULT = new IncrementStmt(n); :}
 |
-  name:n MINUS_OPERATOR MINUS_OPERATOR SEMICOLON_DELIMITER
+  name:n DECREMENT_OPERATOR SEMICOLON_DELIMITER
   {: RESULT = new DecrementStmt(n); :}
 |
   LEFT_BRACKET stmts:s RIGHT_BRACKET optionalsemi:os
@@ -222,7 +222,6 @@ expr ::=
 |
   FALSE_KEYWORD
   {: RESULT = new OperandExpr(false); :}
-
 |
   LEFT_PARENTHESIS expr:e RIGHT_PARENTHESIS
   {: RESULT = new ParenthesizedExpr(e); :}
@@ -231,13 +230,13 @@ expr ::=
   {: RESULT = new UnaryExpr("~", e); :}
 |
   MINUS_OPERATOR expr:e
-  {: RESULT = new UnaryExpr("-", e); :}
+  {: RESULT = new UnaryExpr("-", e); :} %prec PREFIX_MINUS_OPERATOR
 |
   PLUS_OPERATOR expr:e
-  {: RESULT = new UnaryExpr("+", e); :}
+  {: RESULT = new UnaryExpr("+", e); :} %prec PREFIX_PLUS_OPERATOR
 |
   LEFT_PARENTHESIS type:t RIGHT_PARENTHESIS expr:e
-  {: RESULT = new TypeCastExpr(t, e); :}
+  {: RESULT = new TypeCastExpr(t, e); :} %prec TYPE_CAST
 |
   expr:e1 binaryOp:op expr:e2
   {: RESULT = new BinaryExpr(e1, op, e2); :}
