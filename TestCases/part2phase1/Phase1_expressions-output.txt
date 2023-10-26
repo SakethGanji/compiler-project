@@ -12,4 +12,11 @@ Program:
 	read (Identifier:x, Identifier:y);
 	print (Identifier:x, Integer:5);
 	printline (String:"Hello, world", Identifier:x, Identifier:y);
+	call();
+	functionName(Identifier:x, Identifier:y);
+	functionName(String:"true", Boolean:false, Integer:5);
+	return ;
+	return Integer:5;
+	Identifier:Name++;
+	Identifier:saketh--;
 

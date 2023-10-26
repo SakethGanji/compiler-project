@@ -32,17 +32,16 @@ terminal String LEFT_BRACKET, RIGHT_BRACKET, LEFT_SQUARE_BRACKET, RIGHT_SQUARE_B
 */
 
 non terminal Program program;
+non terminal Boolean optionalsemi;
 non terminal Stmts stmts;
 non terminal Stmt stmt;
 non terminal IfEnd ifEnd;
 non terminal Name name;
+non terminal ArgsList args;
 non terminal ReadList readList;
 non terminal PrintList printList;
 non terminal PrintLineList printLineList;
 non terminal Expr expr;
-non terminal Expr binaryExpression;
-non terminal Expr operandExpression;
-non terminal Expr unaryExpression;
 non terminal String binaryOp;
 
 /*
@@ -73,6 +72,14 @@ program ::=
   {: RESULT = new Program(s); :}
 ;
 
+optionalsemi ::=
+  SEMICOLON_DELIMITER
+  {: RESULT = true; :}
+|
+  /* Lambda, empty */
+  {: RESULT = false; :}
+;
+
 stmts ::=
   stmt:s stmts:ss
   {: RESULT = new Stmts(s, ss); :}
@@ -99,6 +106,27 @@ stmt ::=
 |
   PRINTLINE_KEYWORD LEFT_PARENTHESIS printList:pll RIGHT_PARENTHESIS SEMICOLON_DELIMITER
   {: RESULT = new PrintLineStmt(pll); :}
+|
+  IDENTIFIER:i LEFT_PARENTHESIS RIGHT_PARENTHESIS SEMICOLON_DELIMITER
+  {: RESULT = new FunctionCallStmt(i, null); :}
+|
+  IDENTIFIER:i LEFT_PARENTHESIS args:a RIGHT_PARENTHESIS SEMICOLON_DELIMITER
+  {: RESULT = new FunctionCallStmt(i, a); :}
+|
+  RETURN_KEYWORD SEMICOLON_DELIMITER
+  {: RESULT = new ReturnStmt(null); :}
+|
+  RETURN_KEYWORD expr:e SEMICOLON_DELIMITER
+  {: RESULT = new ReturnStmt(e); :}
+|
+  name:n PLUS_OPERATOR PLUS_OPERATOR SEMICOLON_DELIMITER
+  {: RESULT = new IncrementStmt(n); :}
+|
+  name:n MINUS_OPERATOR MINUS_OPERATOR SEMICOLON_DELIMITER
+  {: RESULT = new DecrementStmt(n); :}
+|
+  LEFT_BRACKET stmts:s RIGHT_BRACKET optionalsemi:os
+  {: RESULT = new BlockStmt(s, os); :}
 ;
 
 ifEnd ::=
@@ -115,6 +143,14 @@ name ::=
 |
   IDENTIFIER:i LEFT_SQUARE_BRACKET expr:e RIGHT_SQUARE_BRACKET
   {: RESULT = new Name(i, e); :}
+;
+
+args ::=
+  expr:e COMMA_DELIMITER args:a
+  {: RESULT = new ArgsList(e, a); :}
+|
+  expr:e
+  {: RESULT = new ArgsList(e, null); :}
 ;
 
 readList ::=
