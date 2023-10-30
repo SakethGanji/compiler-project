@@ -33,6 +33,9 @@ terminal String TYPE_CAST;
 non terminal Program program;
 non terminal Boolean optionalsemi;
 non terminal String type;
+non terminal Argdecls argdecls;
+non terminal ArgdeclList argdeclList;
+non terminal Argdecl argdecl;
 non terminal Stmts stmts;
 non terminal Stmt stmt;
 non terminal IfEnd ifEnd;
@@ -70,8 +73,8 @@ precedence left LEFT_PARENTHESIS, RIGHT_PARENTHESIS, LEFT_SQUARE_BRACKET, RIGHT_
 start with program;
 
 program ::=
-  stmts:s
-  {: RESULT = new Program(s); :}
+  argdecls:as
+  {: RESULT = new Program(as); :}
 ;
 
 optionalsemi ::=
@@ -96,6 +99,29 @@ type ::=
   {: RESULT = "float"; :}
 ;
 
+argdecls ::=
+  argdeclList:al
+  {: RESULT = new Argdecls(al); :}
+|
+  /* Lambda, empty */
+  {: RESULT = new Argdecls(null); :}
+;
+
+argdeclList ::=
+  argdecl:a COMMA_DELIMITER argdeclList:al
+  {: RESULT = new ArgdeclList(a, al); :}
+|
+  argdecl:a
+  {: RESULT = new ArgdeclList(a, null); :}
+;
+
+argdecl ::=
+  type:t IDENTIFIER:i
+  {: RESULT = new Argdecl(t, i, false); :}
+|
+  type:t IDENTIFIER:i LEFT_SQUARE_BRACKET RIGHT_SQUARE_BRACKET
+  {: RESULT = new Argdecl(t, i, true); :}
+;
 
 stmts ::=
   stmt:s stmts:ss

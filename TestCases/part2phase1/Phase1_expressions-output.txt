@@ -1,16 +1,3 @@
 Program:
-	Identifier:x = Character:a;
-	Identifier:x = String:"a";
-	Identifier:x = Float:1.1;
-	Identifier:x = Boolean:true;
-	Identifier:x = Boolean:false;
-	Identifier:x = (Identifier:x);
-	Identifier:x = (~Identifier:x);
-	Identifier:x = (-Identifier:x);
-	Identifier:x = (+Identifier:x);
-	Identifier:x = (int)Identifier:x;
-	Identifier:x = (Identifier:x + Identifier:x);
-	Identifier:x = (Identifier:x * Identifier:x);
-	Identifier:x = (Identifier:x > Identifier:x);
-	Identifier:x = ((Identifier:x ? Identifier:x : Identifier:x));
+Argdecls:
 
