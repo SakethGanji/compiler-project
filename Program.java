@@ -1,13 +1,15 @@
 public class Program extends Token {
-  private Methoddecls methoddecls;
+  private String id;
+  private Memberdecls memberDeclarations;
 
-  public Program(Methoddecls methoddecls) {
-    this.methoddecls = methoddecls;
+  public Program(String id, Memberdecls md) {
+    this.id = id;
+    this.memberDeclarations = md;
   }
 
   public String toString(int t) {
-    return "Program:\n" +
-            "Methoddecls: " + methoddecls.toString(t + 1) + "\n";
+    return "Program: class " + id + " {\n" +
+            memberDeclarations.toString(t + 1) +
+            "}\n";
   }
 }
-

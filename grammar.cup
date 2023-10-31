@@ -31,6 +31,7 @@ terminal String TYPE_CAST;
 */
 
 non terminal Program program;
+non terminal Memberdecls memberdecls;
 non terminal Fielddecls fielddecls;
 non terminal Methoddecls methoddecls;
 non terminal Fielddecl fielddecl;
@@ -80,8 +81,13 @@ precedence left LEFT_PARENTHESIS, RIGHT_PARENTHESIS, LEFT_SQUARE_BRACKET, RIGHT_
 start with program;
 
 program ::=
-  methoddecls:mds
+  memberdecls:mds
   {: RESULT = new Program(mds); :}
+;
+
+memberdecls ::=
+  fielddecls:fd methoddecls:md
+  {: RESULT = new Memberdecls(fd, md); :}
 ;
 
 fielddecls ::=
