@@ -7,6 +7,6 @@ public class ReturnStmt extends Stmt {
 
     public String toString(int t) {
         String exprStr = (expr != null) ? expr.toString(0) : "";
-        return getTabs(t) + "return " + exprStr + ";\n";
+        return "return " + exprStr + ";\n";
     }
 }

@@ -31,7 +31,14 @@ terminal String TYPE_CAST;
 */
 
 non terminal Program program;
+non terminal Fielddecls fielddecls;
+non terminal Methoddecls methoddecls;
+non terminal Fielddecl fielddecl;
+non terminal Optionalfinal optionalfinal;
+non terminal Optionalexpr optionalexpr;
+non terminal Methoddecl methoddecl;
 non terminal Boolean optionalsemi;
+non terminal Returntype returntype;
 non terminal String type;
 non terminal Argdecls argdecls;
 non terminal ArgdeclList argdeclList;
@@ -73,8 +80,48 @@ precedence left LEFT_PARENTHESIS, RIGHT_PARENTHESIS, LEFT_SQUARE_BRACKET, RIGHT_
 start with program;
 
 program ::=
-  argdecls:as
-  {: RESULT = new Program(as); :}
+  methoddecls:mds
+  {: RESULT = new Program(mds); :}
+;
+
+fielddecls ::=
+  fielddecl:fd fielddecls:fds
+  {: RESULT = new Fielddecls(fd, fds); :}
+|
+  /* Lambda, empty */
+  {: RESULT = new Fielddecls(); :}
+;
+
+methoddecls ::=
+  methoddecl:md methoddecls:mds
+  {: RESULT = new Methoddecls(md, mds); :}
+|
+  /* Lambda, empty */
+  {: RESULT = new Methoddecls(); :}
+;
+
+fielddecl ::=
+  type:t IDENTIFIER:i optionalexpr:oe SEMICOLON_DELIMITER
+  {: RESULT = new Fielddecl(null, t, i, oe, null); :}
+|
+  FINAL_KEYWORD type:t IDENTIFIER:i optionalexpr:oe SEMICOLON_DELIMITER
+  {: RESULT = new Fielddecl("final", t, i, oe, null); :}
+|
+  type:t IDENTIFIER:i LEFT_SQUARE_BRACKET INTEGER_LITERAL:n RIGHT_SQUARE_BRACKET SEMICOLON_DELIMITER
+  {: RESULT = new Fielddecl(null, t, i, null, n); :}
+;
+
+optionalexpr ::=
+  EQUALS_OPERATOR expr:e
+  {: RESULT = new Optionalexpr(e); :}
+|
+  /* Lambda, empty */
+  {: RESULT = new Optionalexpr(null); :}
+;
+
+methoddecl ::=
+  returntype:rt IDENTIFIER:i LEFT_PARENTHESIS argdecls:ad RIGHT_PARENTHESIS LEFT_BRACKET fielddecls:fd stmts:s RIGHT_BRACKET optionalsemi:os
+  {: RESULT = new Methoddecl(rt, i, ad, fd, s, os); :}
 ;
 
 optionalsemi ::=
@@ -83,6 +130,14 @@ optionalsemi ::=
 |
   /* Lambda, empty */
   {: RESULT = false; :}
+;
+
+returntype ::=
+  type:t
+  {: RESULT = new Returntype(t); :}
+|
+  VOID_KEYWORD
+  {: RESULT = new Returntype("void"); :}
 ;
 
 type ::=

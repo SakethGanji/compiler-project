@@ -1,3 +1,18 @@
 Program:
-Argdecls:
+Methoddecls: void myMethod() {
+}
+
+float calculate(float a, float b) {
+final int x = Integer:10;
+return (Identifier:a * (Identifier:b + Identifier:x));
+}
+
+bool compare(int a, int b, char c) {
+return (Identifier:a == (Identifier:b && (Identifier:c == Character:y)));
+}
+;
+int add(int a, int b) {
+return (Identifier:a + Identifier:b);
+}
+;
 

@@ -1,13 +1,13 @@
 public class Program extends Token {
-  private Argdecls argdecls;
+  private Methoddecls methoddecls;
 
-  public Program(Argdecls argdecls) {
-    this.argdecls = argdecls;
+  public Program(Methoddecls methoddecls) {
+    this.methoddecls = methoddecls;
   }
 
   public String toString(int t) {
     return "Program:\n" +
-            "Argdecls:\n" + argdecls.toString(t + 1) + "\n";
+            "Methoddecls: " + methoddecls.toString(t + 1) + "\n";
   }
-
 }
+

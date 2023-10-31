@@ -7,7 +7,7 @@ public class Argdecls extends Token {
 
     public String toString(int t) {
         if (argdeclList != null) {
-            return getTabs(t) +  argdeclList.toString(t);
+            return argdeclList.toString(t);
         } else {
             return "";
         }

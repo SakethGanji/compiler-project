@@ -1,0 +1,13 @@
+void myMethod() {
+}
+float calculate(float a, float b) {
+  final int x = 10;
+  return a * b + x;
+}
+bool compare(int a, int b, char c) {
+  return a == b && c == 'y';
+};
+int add(int a, int b) {
+  return a + b;
+};
+
