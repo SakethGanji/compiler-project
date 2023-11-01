@@ -32,6 +32,7 @@ terminal String TYPE_CAST;
 
 non terminal Program program;
 non terminal Memberdecls memberdecls;
+non terminal Memberdecl memberdecl;
 non terminal Fielddecls fielddecls;
 non terminal Methoddecls methoddecls;
 non terminal Fielddecl fielddecl;
@@ -81,13 +82,25 @@ precedence left LEFT_PARENTHESIS, RIGHT_PARENTHESIS, LEFT_SQUARE_BRACKET, RIGHT_
 start with program;
 
 program ::=
-  memberdecls:mds
-  {: RESULT = new Program(mds); :}
+  CLASS_KEYWORD IDENTIFIER:id LEFT_BRACKET memberdecls:mds RIGHT_BRACKET
+  {: RESULT = new Program(id, mds); :}
 ;
 
+
 memberdecls ::=
-  fielddecls:fd methoddecls:md
-  {: RESULT = new Memberdecls(fd, md); :}
+  memberdecl:md memberdecls:mds
+  {: RESULT = new Memberdecls(md, mds); :}
+|
+  /* Lambda, empty */
+  {: RESULT = new Memberdecls(); :}
+;
+
+memberdecl ::=
+  fielddecl:fd
+  {: RESULT = new Memberdecl(fd); :}
+|
+  methoddecl:md
+  {: RESULT = new Memberdecl(md); :}
 ;
 
 fielddecls ::=
@@ -126,8 +139,11 @@ optionalexpr ::=
 ;
 
 methoddecl ::=
-  returntype:rt IDENTIFIER:i LEFT_PARENTHESIS argdecls:ad RIGHT_PARENTHESIS LEFT_BRACKET fielddecls:fd stmts:s RIGHT_BRACKET optionalsemi:os
-  {: RESULT = new Methoddecl(rt, i, ad, fd, s, os); :}
+  type:t IDENTIFIER:i LEFT_PARENTHESIS argdecls:ad RIGHT_PARENTHESIS LEFT_BRACKET fielddecls:fd stmts:s RIGHT_BRACKET optionalsemi:os
+  {: RESULT = new Methoddecl(t, i, ad, fd, s, os); :}
+|
+  VOID_KEYWORD IDENTIFIER:i LEFT_PARENTHESIS argdecls:ad RIGHT_PARENTHESIS LEFT_BRACKET fielddecls:fd stmts:s RIGHT_BRACKET optionalsemi:os
+  {: RESULT = new Methoddecl("void", i, ad, fd, s, os); :}
 ;
 
 optionalsemi ::=
