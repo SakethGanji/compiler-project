@@ -86,7 +86,6 @@ program ::=
   {: RESULT = new Program(id, mds); :}
 ;
 
-
 memberdecls ::=
   memberdecl:md memberdecls:mds
   {: RESULT = new Memberdecls(md, mds); :}
@@ -245,8 +244,8 @@ stmt ::=
   name:n DECREMENT_OPERATOR SEMICOLON_DELIMITER
   {: RESULT = new DecrementStmt(n); :}
 |
-  LEFT_BRACKET stmts:s RIGHT_BRACKET optionalsemi:os
-  {: RESULT = new BlockStmt(s, os); :}
+  LEFT_BRACKET fielddecls:fd stmts:s RIGHT_BRACKET optionalsemi:os
+  {: RESULT = new BlockStmt(fd, s, os); :}
 ;
 
 ifEnd ::=
@@ -311,8 +310,7 @@ expr ::=
   {: RESULT = new OperandExpr(n); :}
 |
   CHARACTER_LITERAL:c
-  {:
-  RESULT = new OperandExpr(c); :}
+  {:RESULT = new OperandExpr(c); :}
 |
   STRING_LITERAL:s
   {: RESULT = new OperandExpr(s); :}
