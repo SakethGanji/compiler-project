@@ -11,6 +11,6 @@ public class BlockStmt extends Stmt {
 
     public String toString(int t) {
         String semi = optionalsemi ? ";" : "";
-        return  "{\n" + fielddecls.toString(t + 1) + stmts.toString(t + 1) +  "}" + semi + "\n";
+        return  "{\n" + fielddecls.toString(t + 1) + stmts.toString(t + 1) + getTabs(t) + "}" + semi + "\n";
     }
 }

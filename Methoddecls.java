@@ -3,13 +3,12 @@ import java.util.List;
 
 public class Methoddecls extends Token {
     private List<Methoddecl> methodDeclarations;
-    private Methoddecls nextMethodDecls; // To hold the next Methoddecls
+    private Methoddecls nextMethodDecls;
 
     public Methoddecls() {
         methodDeclarations = new LinkedList<>();
     }
 
-    // Constructor for a single Methoddecl and another Methoddecls
     public Methoddecls(Methoddecl md, Methoddecls mds) {
         this();
         methodDeclarations.add(md);
@@ -22,6 +21,7 @@ public class Methoddecls extends Token {
     public String toString(int t) {
         StringBuilder sb = new StringBuilder();
         for (Methoddecl md : methodDeclarations) {
+
             sb.append(md.toString(t));
             sb.append("\n");
         }

@@ -15,7 +15,7 @@ public class Memberdecls extends Token {
     public String toString(int t) {
         StringBuilder sb = new StringBuilder();
         if (memberDeclaration != null) {
-            sb.append(memberDeclaration.toString(t + 1));
+            sb.append(memberDeclaration.toString(t));
         }
         if (next != null) {
             sb.append("\n");

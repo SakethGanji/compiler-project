@@ -17,6 +17,7 @@ class Stmts extends Token {
     public String toString(int t) {
         StringBuilder sb = new StringBuilder();
         for (Stmt s : statements) {
+            sb.append(getTabs(t));
             sb.append(s.toString(t));
         }
         return sb.toString();

@@ -6,6 +6,6 @@ public class Optionalexpr extends Token {
     }
 
     public String toString(int t) {
-        return (expr != null) ? "= " + expr.toString(t) : "";
+        return (expr != null) ? " = " + expr.toString(t) : "";
     }
 }

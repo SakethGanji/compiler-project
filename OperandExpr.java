@@ -28,6 +28,6 @@ public class OperandExpr extends Expr {
   }
 
   public String toString(int t) {
-    return type + ":" + value.toString();
+    return value.toString();
   }
 }

@@ -10,6 +10,6 @@ class WhileStmt extends Stmt {
     public String toString(int t) {
         return "while (" + condition.toString(0) + ") {\n" +
                 block.toString(t+1) +
-                 "}\n";
+                getTabs(t) + "}\n";
     }
 }

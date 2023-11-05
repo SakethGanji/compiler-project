@@ -20,6 +20,10 @@ public class Fielddecls extends Token {
             sb.append(fd.toString(t));
             sb.append("\n");
         }
+        if (!fieldDeclarations.isEmpty()) {
+            sb.append("\n");
+        }
         return sb.toString();
     }
+
 }

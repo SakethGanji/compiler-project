@@ -17,18 +17,23 @@ public class Methoddecl extends Token {
 
     public String toString(int t) {
         StringBuilder sb = new StringBuilder();
-        sb.append(returntype.toString());
+        sb.append(getTabs(t));
+        sb.append(returntype);
         sb.append(" ");
         sb.append(identifier);
         sb.append("(");
         sb.append(argdecls.toString(t));
         sb.append(") {\n");
-        sb.append(fielddecls.toString(t+1));
-        sb.append(stmts.toString(t+1));
-        sb.append("}\n");
+        sb.append(fielddecls.toString(t + 1));
+        sb.append(stmts.toString(t + 1));
+        sb.append(getTabs(t)).append("}");
+
         if (optionalsemi) {
             sb.append(";");
         }
+
+        sb.append("\n");
         return sb.toString();
     }
+
 }
