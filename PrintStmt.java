@@ -6,6 +6,6 @@ public class PrintStmt extends Stmt {
     }
 
     public String toString(int t) {
-        return getTabs(t) + "print (" + printList.toString(0) + ");\n";
+        return "print (" + printList.toString(0) + ");\n";
     }
 }

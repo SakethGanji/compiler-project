@@ -1,7 +1,59 @@
-Program: class onlyMethods {
-Method Declaration:
-int x() {
-				print (Identifier:x);
+class test {
+int x[7];
+float pythag(float vals[]) {
+float a = vals[Integer:0];
+float b = vals[Integer:1];
+float c ;
+a = (a * a);
+b = (b * b);
+c = sqrt((a + b));
+return (c + Float:0.0);
 }
+
+void main() {
+float height ;
+float length ;
+float triVals[3];
+read (height, length);
+triVals[Integer:0] = height;
+triVals[Integer:1] = length;
+{
+int emu43[43];
+triVals[Integer:2] = pythag(triVals);
+};
+print (triVals[Integer:2]);
+pythag();
+pythag(x);
+pythag(x, y);
+x = pythag();
+x = pythag(x, y);
+}
+
+float testUnmatchedIfInAClosedMatchedIf() {
+{
+if (Boolean:true) {
+if (thisShouldntHaveAnElse) {
+read (betterNot);
+}
+}
+else {
+justAStatement = String:"ye";
+}
+};
+}
+
+int someAdditionalRandomTests() {
+printline ();
+read (x, y);
+read (x);
+print (x);
+print (x, y);
+x++;
+x--;
+x[(Integer:0 + (Integer:8 || Integer:7))]++;
+y[(Integer:8 * ((~Integer:7) - (tensai() + (tensai((Integer:16 - Integer:32), Integer:4) - tensai(x[Integer:6])))))]--;
+testFunc((Integer:6 + Integer:7), ((+Integer:4) - Integer:2));
+}
+
 
 }

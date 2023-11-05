@@ -9,6 +9,6 @@ public class FunctionCallExpr extends Expr {
 
     public String toString(int t) {
         String argStr = (args != null) ? args.toString(0) : "";
-        return getTabs(t) + functionName + "(" + argStr + ")";
+        return functionName + "(" + argStr + ")";
     }
 }

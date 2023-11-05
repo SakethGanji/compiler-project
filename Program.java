@@ -8,8 +8,8 @@ public class Program extends Token {
   }
 
   public String toString(int t) {
-    return "Program: class " + id + " {\n" +
+    return "class " + id + " {\n" +
             memberDeclarations.toString(t + 1) +
-            "}\n";
+            "\n" + "}";
   }
 }

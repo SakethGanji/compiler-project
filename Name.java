@@ -8,11 +8,10 @@ public class Name extends Expr {
     }
 
     public String toString(int t) {
-        String prefix = "Identifier:";
         if (expr != null) {
-            return prefix + identifier + "[" + expr.toString(0) + "]";
+            return identifier + "[" + expr.toString(0) + "]";
         } else {
-            return prefix + identifier;
+            return identifier;
         }
     }
 

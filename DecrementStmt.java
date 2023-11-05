@@ -6,6 +6,6 @@ public class DecrementStmt extends Stmt {
     }
 
     public String toString(int t) {
-        return getTabs(t) + name.toString(0) + "--;\n";
+        return name.toString(0) + "--;\n";
     }
 }

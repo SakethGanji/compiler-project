@@ -10,9 +10,9 @@ public class IfStmt extends Stmt {
     }
 
     public String toString(int t) {
-        return getTabs(t) + "if (" + condition.toString(0) + ") {\n" +
+        return  "if (" + condition.toString(0) + ") {\n" +
                 thenBlock.toString(t + 1) +
-                getTabs(t) + "}\n" +
+                 "}\n" +
                 ifEnd.toString(t);  // Updated to use IfEnd's toString
     }
 }

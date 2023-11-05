@@ -6,6 +6,6 @@ public class ParenthesizedExpr extends Expr {
     }
 
     public String toString(int t) {
-        return getTabs(t) + "(" + expr.toString(0) + ")";
+        return "(" + expr.toString(0) + ")";
     }
 }

@@ -15,10 +15,8 @@ public class Memberdecl extends Token {
     public String toString(int t) {
         StringBuilder sb = new StringBuilder();
         if (fieldDeclaration != null) {
-            sb.append("Field Declaration:\n");
             sb.append(fieldDeclaration.toString(t + 1));
         } else if (methodDeclaration != null) {
-            sb.append("Method Declaration:\n");
             sb.append(methodDeclaration.toString(t + 1));
         }
         return sb.toString();

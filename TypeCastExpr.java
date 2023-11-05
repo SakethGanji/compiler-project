@@ -8,6 +8,6 @@ public class TypeCastExpr extends Expr {
     }
 
     public String toString(int t) {
-        return getTabs(t) + "(" + type + ")" + expr.toString(0);
+        return "(" + type + ")" + expr.toString(0);
     }
 }

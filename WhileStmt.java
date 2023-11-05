@@ -8,8 +8,8 @@ class WhileStmt extends Stmt {
     }
 
     public String toString(int t) {
-        return getTabs(t) + "while (" + condition.toString(0) + ") {\n" +
+        return "while (" + condition.toString(0) + ") {\n" +
                 block.toString(t+1) +
-                getTabs(t) + "}\n";
+                 "}\n";
     }
 }

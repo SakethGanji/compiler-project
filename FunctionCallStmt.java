@@ -9,6 +9,6 @@ public class FunctionCallStmt extends Stmt {
 
     public String toString(int t) {
         String argStr = (args != null) ? args.toString(0) : "";
-        return getTabs(t) + functionName + "(" + argStr + ");\n";
+        return functionName + "(" + argStr + ");\n";
     }
 }

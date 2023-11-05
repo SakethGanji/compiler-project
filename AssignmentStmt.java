@@ -8,6 +8,6 @@ public class AssignmentStmt extends Stmt {
     }
 
     public String toString(int t) {
-        return getTabs(t) + assignee.toString(0) + " = " + rhs.toString(0) + ";\n";
+        return  assignee.toString(0) + " = " + rhs.toString(0) + ";\n";
     }
 }

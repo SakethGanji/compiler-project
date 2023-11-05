@@ -10,7 +10,7 @@ public class BinaryExpr extends Expr {
     }
 
     public String toString(int t) {
-        return getTabs(t) + "(" + left.toString(0) + " " + operator + " " + right.toString(0) + ")";
+        return "(" + left.toString(0) + " " + operator + " " + right.toString(0) + ")";
     }
 
     public String getTabs(int t) {

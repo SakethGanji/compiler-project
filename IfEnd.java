@@ -11,9 +11,9 @@ public class IfEnd extends Stmt {
 
     public String toString(int t) {
         if (elseBlock != null) {
-            return getTabs(t) + "else {\n" +
+            return  "else {\n" +
                     elseBlock.toString(t + 1) +
-                    getTabs(t) + "}\n";
+                     "}\n";
         } else {
             return "";
         }

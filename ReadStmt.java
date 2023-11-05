@@ -6,6 +6,6 @@ public class ReadStmt extends Stmt {
     }
 
     public String toString(int t) {
-        return getTabs(t) + "read (" + readList.toString(0) + ");\n";
+        return "read (" + readList.toString(0) + ");\n";
     }
 }

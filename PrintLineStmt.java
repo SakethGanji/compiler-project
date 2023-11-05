@@ -7,9 +7,9 @@ public class PrintLineStmt extends Stmt {
 
     public String toString(int t) {
         if (printLineList != null) {
-            return getTabs(t) + "printline (" + printLineList.toString(0) + ");\n";
+            return "printline (" + printLineList.toString(0) + ");\n";
         } else {
-            return getTabs(t) + "printline ();\n";
+            return "printline ();\n";
         }
     }
 }
