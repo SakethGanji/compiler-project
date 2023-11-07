@@ -69,7 +69,6 @@ non terminal Memberdecl memberdecl;
 non terminal Fielddecls fielddecls;
 non terminal Methoddecls methoddecls;
 non terminal Fielddecl fielddecl;
-non terminal Optionalfinal optionalfinal;
 non terminal Optionalexpr optionalexpr;
 non terminal Methoddecl methoddecl;
 non terminal Boolean optionalsemi;
@@ -87,7 +86,6 @@ non terminal ReadList readList;
 non terminal PrintList printList;
 non terminal PrintLineList printLineList;
 non terminal Expr expr;
-non terminal String binaryOp;
 non terminal Expr binaryExpression;
 non terminal Expr operandExpression;
 non terminal Expr unaryExpression;
@@ -100,6 +98,7 @@ non terminal Expr additiveExpression;
 non terminal Expr multiplicativeExpression;
 non terminal Expr postfixExpression;
 non terminal Expr primaryExpression;
+non terminal Expr castExpression;
 
 
 /*
@@ -285,10 +284,10 @@ stmt ::=
   {: RESULT = new ReturnStmt(e); :}
 |
   name:n INCREMENT_OPERATOR SEMICOLON_DELIMITER
-  {: RESULT = new IncrementStmt(n); :}
+  {: RESULT = new IncrementStmt(n); :} %prec INCREMENT_OPERATOR
 |
   name:n DECREMENT_OPERATOR SEMICOLON_DELIMITER
-  {: RESULT = new DecrementStmt(n); :}
+  {: RESULT = new DecrementStmt(n); :} %prec DECREMENT_OPERATOR
 |
   LEFT_BRACKET fielddecls:fd stmts:s RIGHT_BRACKET optionalsemi:os
   {: RESULT = new BlockStmt(fd, s, os); :}
@@ -411,14 +410,22 @@ additiveExpression ::=
 ;
 
 multiplicativeExpression ::=
+  castExpression:ce
+  {: RESULT = ce; :}
+|
+  multiplicativeExpression:mu1 MULTIPLICATION_OPERATOR castExpression:ce
+  {: RESULT = new BinaryExpr(mu1, "*", ce); :}
+|
+  multiplicativeExpression:mu1 DIVISION_OPERATOR castExpression:ce
+  {: RESULT = new BinaryExpr(mu1, "/", ce); :}
+;
+
+castExpression ::=
   unaryExpression:u
   {: RESULT = u; :}
 |
-  multiplicativeExpression:mu1 MULTIPLICATION_OPERATOR unaryExpression:u
-  {: RESULT = new BinaryExpr(mu1, "*", u); :}
-|
-  multiplicativeExpression:mu1 DIVISION_OPERATOR unaryExpression:u
-  {: RESULT = new BinaryExpr(mu1, "/", u); :}
+  LEFT_PARENTHESIS type:t RIGHT_PARENTHESIS castExpression:ce
+  {: RESULT = new TypeCastExpr(t, ce); :} %prec TYPE_CAST
 ;
 
 unaryExpression ::=
@@ -429,39 +436,41 @@ unaryExpression ::=
   {: RESULT = new UnaryExpr("~", u); :}
 |
   MINUS_OPERATOR unaryExpression:u
-  {: RESULT = new UnaryExpr("-", u); :}
+  {: RESULT = new UnaryExpr("-", u); :} %prec PREFIX_MINUS_OPERATOR
 |
   PLUS_OPERATOR unaryExpression:u
-  {: RESULT = new UnaryExpr("+", u); :}
+  {: RESULT = new UnaryExpr("+", u); :} %prec PREFIX_PLUS_OPERATOR
 ;
 
 postfixExpression ::=
-  primaryExpression:p
-  {: RESULT = p; :}
-  // Handle postfix operators like ++ and -- if they are part of your language here
+  primaryExpression:pe
+  {: RESULT = pe; :}
+|
+  IDENTIFIER:i LEFT_PARENTHESIS RIGHT_PARENTHESIS
+  {: RESULT = new FunctionCallExpr(i, null); :}
+|
+  IDENTIFIER:i LEFT_PARENTHESIS args:a RIGHT_PARENTHESIS
+  {: RESULT = new FunctionCallExpr(i, a); :}
 ;
 
 primaryExpression ::=
-  operandExpression:o
-  {: RESULT = o; :}
-  // Handle parentheses ( expr ) here to ensure proper precedence
-;
-
-operandExpression ::=
-  IDENTIFIER:i
-  {: RESULT = new OperandExpr(i, "Identifier"); :}
+  name:n
+  {: RESULT = n; :}
 |
-  INTEGER_LITERAL:n
-  {: RESULT = new OperandExpr(n, "Integer"); :}
+  LEFT_PARENTHESIS expr:e RIGHT_PARENTHESIS
+  {: RESULT = e; :}
 |
-  CHARACTER_LITERAL:c
-  {: RESULT = new OperandExpr(c, "Character"); :}
+  INTEGER_LITERAL:il
+  {: RESULT = new OperandExpr(il, "Integer"); :}
 |
-  STRING_LITERAL:s
-  {: RESULT = new OperandExpr(s, "String"); :}
+  CHARACTER_LITERAL:cl
+  {: RESULT = new OperandExpr(cl, "Character"); :}
 |
-  FLOATING_POINT_LITERAL:f
-  {: RESULT = new OperandExpr(f, "Float"); :}
+  STRING_LITERAL:sl
+  {: RESULT = new OperandExpr(sl, "String"); :}
+|
+  FLOATING_POINT_LITERAL:fl
+  {: RESULT = new OperandExpr(fl, "Float"); :}
 |
   TRUE_KEYWORD
   {: RESULT = new OperandExpr(true, "Boolean"); :}
@@ -469,3 +478,4 @@ operandExpression ::=
   FALSE_KEYWORD
   {: RESULT = new OperandExpr(false, "Boolean"); :}
 ;
+

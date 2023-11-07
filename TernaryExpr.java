@@ -10,6 +10,6 @@ public class TernaryExpr extends Expr {
     }
 
     public String toString(int t) {
-        return "(" + condition.toString(t) + " ? " + trueExpr.toString(t) + " : " + falseExpr.toString(t) + ")";
+        return "(" + condition.toString(0) + " ? " + trueExpr.toString(0) + " : " + falseExpr.toString(0) + ")";
     }
 }
