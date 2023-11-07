@@ -6,22 +6,55 @@ import java_cup.runtime.*;
   =====================
 */
 
-terminal String CLASS_KEYWORD, FINAL_KEYWORD, INTEGER_KEYWORD, CHARACTER_KEYWORD, BOOLEAN_KEYWORD, FLOAT_KEYWORD, VOID_KEYWORD;
-terminal String IF_KEYWORD, ELSE_KEYWORD, WHILE_KEYWORD, READ_KEYWORD, PRINT_KEYWORD, PRINTLINE_KEYWORD, RETURN_KEYWORD;
-terminal String TRUE_KEYWORD, FALSE_KEYWORD;
-terminal String IDENTIFIER;
-terminal int INTEGER_LITERAL;
-terminal char CHARACTER_LITERAL;
-terminal String STRING_LITERAL;
-terminal double FLOATING_POINT_LITERAL;
-terminal String EQUALS_OPERATOR, PLUS_OPERATOR, MINUS_OPERATOR, TILDE_OPERATOR;
-terminal String MULTIPLICATION_OPERATOR, DIVISION_OPERATOR;
-terminal String LESS_THAN_OPERATOR, GREATER_THAN_OPERATOR, LESS_THAN_OR_EQUAL_OPERATOR, GREATER_THAN_OR_EQUAL_OPERATOR;
-terminal String EQUALITY_OPERATOR, NOT_EQUAL_OPERATOR, OR_OPERATOR, AND_OPERATOR;
-terminal String SEMICOLON_DELIMITER, COMMA_DELIMITER, LEFT_PARENTHESIS, RIGHT_PARENTHESIS;
-terminal String LEFT_BRACKET, RIGHT_BRACKET, LEFT_SQUARE_BRACKET, RIGHT_SQUARE_BRACKET, COLON_DELIMITER, QUESTION_MARK_OPERATOR;
-
-terminal INCREMENT_OPERATOR, DECREMENT_OPERATOR, PREFIX_PLUS_OPERATOR, PREFIX_MINUS_OPERATOR;
+terminal String CLASS_KEYWORD; //2
+terminal String FINAL_KEYWORD; //3
+terminal String INTEGER_KEYWORD; //4
+terminal String CHARACTER_KEYWORD; //5
+terminal String BOOLEAN_KEYWORD; //6
+terminal String FLOAT_KEYWORD; //7
+terminal String VOID_KEYWORD; //8
+terminal String IF_KEYWORD; //9
+terminal String ELSE_KEYWORD; //10
+terminal String WHILE_KEYWORD; //11
+terminal String READ_KEYWORD; //12
+terminal String PRINT_KEYWORD; //13
+terminal String PRINTLINE_KEYWORD; //14
+terminal String RETURN_KEYWORD; //15
+terminal String TRUE_KEYWORD; //16
+terminal String FALSE_KEYWORD; //17
+terminal String IDENTIFIER; //18
+terminal int INTEGER_LITERAL; //19
+terminal char CHARACTER_LITERAL; //20
+terminal String STRING_LITERAL; //21
+terminal double FLOATING_POINT_LITERAL; //22
+terminal String EQUALS_OPERATOR; //23
+terminal String PLUS_OPERATOR; //24
+terminal String MINUS_OPERATOR; //25
+terminal String TILDE_OPERATOR; //26
+terminal String MULTIPLICATION_OPERATOR; //27
+terminal String DIVISION_OPERATOR; //28
+terminal String LESS_THAN_OPERATOR; //29
+terminal String GREATER_THAN_OPERATOR; //30
+terminal String LESS_THAN_OR_EQUAL_OPERATOR; //31
+terminal String GREATER_THAN_OR_EQUAL_OPERATOR; //32
+terminal String EQUALITY_OPERATOR; //33
+terminal String NOT_EQUAL_OPERATOR; //34
+terminal String OR_OPERATOR; //35
+terminal String AND_OPERATOR; //36
+terminal String SEMICOLON_DELIMITER; //37
+terminal String COMMA_DELIMITER; //38
+terminal String LEFT_PARENTHESIS; //39
+terminal String RIGHT_PARENTHESIS; //40
+terminal String LEFT_BRACKET; //41
+terminal String RIGHT_BRACKET; //42
+terminal String LEFT_SQUARE_BRACKET; //43
+terminal String RIGHT_SQUARE_BRACKET; //44
+terminal String COLON_DELIMITER; //45
+terminal String QUESTION_MARK_OPERATOR; //46
+terminal String INCREMENT_OPERATOR;
+terminal String DECREMENT_OPERATOR;
+terminal String PREFIX_PLUS_OPERATOR;
+terminal String PREFIX_MINUS_OPERATOR;
 terminal String TYPE_CAST;
 
 /*
@@ -55,6 +88,19 @@ non terminal PrintList printList;
 non terminal PrintLineList printLineList;
 non terminal Expr expr;
 non terminal String binaryOp;
+non terminal Expr binaryExpression;
+non terminal Expr operandExpression;
+non terminal Expr unaryExpression;
+non terminal Expr conditionalExpression;
+non terminal Expr logicalOrExpression;
+non terminal Expr logicalAndExpression;
+non terminal Expr equalityExpression;
+non terminal Expr relationalExpression;
+non terminal Expr additiveExpression;
+non terminal Expr multiplicativeExpression;
+non terminal Expr postfixExpression;
+non terminal Expr primaryExpression;
+
 
 /*
   =====================
@@ -62,16 +108,16 @@ non terminal String binaryOp;
   =====================
 */
 
-precedence right QUESTION_MARK_OPERATOR, COLON_DELIMITER;
-precedence left OR_OPERATOR;
-precedence left AND_OPERATOR;
-precedence left EQUALITY_OPERATOR, NOT_EQUAL_OPERATOR;
-precedence left LESS_THAN_OPERATOR, GREATER_THAN_OPERATOR, LESS_THAN_OR_EQUAL_OPERATOR, GREATER_THAN_OR_EQUAL_OPERATOR;
-precedence left PLUS_OPERATOR, MINUS_OPERATOR;
-precedence left MULTIPLICATION_OPERATOR, DIVISION_OPERATOR;
-precedence left TYPE_CAST;
-precedence right TILDE_OPERATOR, PREFIX_PLUS_OPERATOR, PREFIX_MINUS_OPERATOR, INCREMENT_OPERATOR, DECREMENT_OPERATOR;
 precedence left LEFT_PARENTHESIS, RIGHT_PARENTHESIS, LEFT_SQUARE_BRACKET, RIGHT_SQUARE_BRACKET;
+precedence right TILDE_OPERATOR, PREFIX_PLUS_OPERATOR, PREFIX_MINUS_OPERATOR, INCREMENT_OPERATOR, DECREMENT_OPERATOR;
+precedence left TYPE_CAST;
+precedence left MULTIPLICATION_OPERATOR, DIVISION_OPERATOR;
+precedence left PLUS_OPERATOR, MINUS_OPERATOR;
+precedence left LESS_THAN_OPERATOR, GREATER_THAN_OPERATOR, LESS_THAN_OR_EQUAL_OPERATOR, GREATER_THAN_OR_EQUAL_OPERATOR;
+precedence left EQUALITY_OPERATOR, NOT_EQUAL_OPERATOR;
+precedence left AND_OPERATOR;
+precedence left OR_OPERATOR;
+precedence right QUESTION_MARK_OPERATOR, COLON_DELIMITER;
 
 /*
   =====================
@@ -90,7 +136,7 @@ memberdecls ::=
   memberdecl:md memberdecls:mds
   {: RESULT = new Memberdecls(md, mds); :}
 |
-  /* Lambda, empty */
+  /* Lamda */
   {: RESULT = new Memberdecls(); :}
 ;
 
@@ -106,7 +152,7 @@ fielddecls ::=
   fielddecl:fd fielddecls:fds
   {: RESULT = new Fielddecls(fd, fds); :}
 |
-  /* Lambda, empty */
+  /* Lamda */
   {: RESULT = new Fielddecls(); :}
 ;
 
@@ -114,7 +160,7 @@ methoddecls ::=
   methoddecl:md methoddecls:mds
   {: RESULT = new Methoddecls(md, mds); :}
 |
-  /* Lambda, empty */
+  /* Lamda */
   {: RESULT = new Methoddecls(); :}
 ;
 
@@ -133,7 +179,7 @@ optionalexpr ::=
   EQUALS_OPERATOR expr:e
   {: RESULT = new Optionalexpr(e); :}
 |
-  /* Lambda, empty */
+  /* Lamda */
   {: RESULT = new Optionalexpr(null); :}
 ;
 
@@ -149,7 +195,7 @@ optionalsemi ::=
   SEMICOLON_DELIMITER
   {: RESULT = true; :}
 |
-  /* Lambda, empty */
+  /* Lamda */
   {: RESULT = false; :}
 ;
 
@@ -179,7 +225,7 @@ argdecls ::=
   argdeclList:al
   {: RESULT = new Argdecls(al); :}
 |
-  /* Lambda, empty */
+  /* Lamda */
   {: RESULT = new Argdecls(null); :}
 ;
 
@@ -203,7 +249,7 @@ stmts ::=
   stmt:s stmts:ss
   {: RESULT = new Stmts(s, ss); :}
 |
-  /* Lambda, empty */
+  /* Lamda */
   {: RESULT = new Stmts(); :}
 ;
 
@@ -292,94 +338,134 @@ printLineList ::=
   printList:pl
   {: RESULT = new PrintLineList(pl); :}
 |
-  /* Lambda, empty */
+  /* Lamda */
   {: RESULT = new PrintLineList(null); :}
 ;
 
 expr ::=
-  name:n
-  {: RESULT = n; :}
-|
-  IDENTIFIER:i LEFT_PARENTHESIS RIGHT_PARENTHESIS
-  {: RESULT = new FunctionCallExpr(i, null); :}
-|
-  IDENTIFIER:i LEFT_PARENTHESIS args:a RIGHT_PARENTHESIS
-  {: RESULT = new FunctionCallExpr(i, a); :}
-|
-  INTEGER_LITERAL:n
-  {: RESULT = new OperandExpr(n); :}
-|
-  CHARACTER_LITERAL:c
-  {:RESULT = new OperandExpr(c); :}
-|
-  STRING_LITERAL:s
-  {: RESULT = new OperandExpr(s); :}
-|
-  FLOATING_POINT_LITERAL:f
-  {: RESULT = new OperandExpr(f); :}
-|
-  TRUE_KEYWORD
-  {: RESULT = new OperandExpr(true); :}
-|
-  FALSE_KEYWORD
-  {: RESULT = new OperandExpr(false); :}
-|
-  LEFT_PARENTHESIS expr:e RIGHT_PARENTHESIS
-  {: RESULT = new ParenthesizedExpr(e); :}
-|
-  TILDE_OPERATOR expr:e
-  {: RESULT = new UnaryExpr("~", e); :}
-|
-  MINUS_OPERATOR expr:e
-  {: RESULT = new UnaryExpr("-", e); :} %prec PREFIX_MINUS_OPERATOR
-|
-  PLUS_OPERATOR expr:e
-  {: RESULT = new UnaryExpr("+", e); :} %prec PREFIX_PLUS_OPERATOR
-|
-  LEFT_PARENTHESIS type:t RIGHT_PARENTHESIS expr:e
-  {: RESULT = new TypeCastExpr(t, e); :} %prec TYPE_CAST
-|
-  expr:e1 binaryOp:op expr:e2
-  {: RESULT = new BinaryExpr(e1, op, e2); :}
-|
-  expr:e1 QUESTION_MARK_OPERATOR expr:e2 COLON_DELIMITER expr:e3
-  {: RESULT = new TernaryExpr(e1, e2, e3); :}
+  conditionalExpression:c
+  {: RESULT = c; :}
 ;
 
-binaryOp ::=
-  MULTIPLICATION_OPERATOR
-  {: RESULT = "*"; :}
+conditionalExpression ::=
+  logicalOrExpression:lo
+  {: RESULT = lo; :}
 |
-  DIVISION_OPERATOR
-  {: RESULT = "/"; :}
+  logicalOrExpression:lo QUESTION_MARK_OPERATOR conditionalExpression:c1 COLON_DELIMITER conditionalExpression:c2
+  {: RESULT = new TernaryExpr(lo, c1, c2); :}
+;
+
+logicalOrExpression ::=
+  logicalAndExpression:la
+  {: RESULT = la; :}
 |
-  PLUS_OPERATOR
-  {: RESULT = "+"; :}
+  logicalOrExpression:lo1 OR_OPERATOR logicalAndExpression:la
+  {: RESULT = new BinaryExpr(lo1, "||", la); :}
+;
+
+logicalAndExpression ::=
+  equalityExpression:eq
+  {: RESULT = eq; :}
 |
-  MINUS_OPERATOR
-  {: RESULT = "-"; :}
+  logicalAndExpression:la1 AND_OPERATOR equalityExpression:eq
+  {: RESULT = new BinaryExpr(la1, "&&", eq); :}
+;
+
+equalityExpression ::=
+  relationalExpression:re
+  {: RESULT = re; :}
 |
-  LESS_THAN_OPERATOR
-  {: RESULT = "<"; :}
+  equalityExpression:eq1 EQUALITY_OPERATOR relationalExpression:re
+  {: RESULT = new BinaryExpr(eq1, "==", re); :}
 |
-  GREATER_THAN_OPERATOR
-  {: RESULT = ">"; :}
+  equalityExpression:eq1 NOT_EQUAL_OPERATOR relationalExpression:re
+  {: RESULT = new BinaryExpr(eq1, "<>", re); :}
+;
+
+relationalExpression ::=
+  additiveExpression:ad
+  {: RESULT = ad; :}
 |
-  LESS_THAN_OR_EQUAL_OPERATOR
-  {: RESULT = "<="; :}
+  relationalExpression:re1 LESS_THAN_OPERATOR additiveExpression:ad
+  {: RESULT = new BinaryExpr(re1, "<", ad); :}
 |
-  GREATER_THAN_OR_EQUAL_OPERATOR
-  {: RESULT = ">="; :}
+  relationalExpression:re1 GREATER_THAN_OPERATOR additiveExpression:ad
+  {: RESULT = new BinaryExpr(re1, ">", ad); :}
 |
-  EQUALITY_OPERATOR
-  {: RESULT = "=="; :}
+  relationalExpression:re1 LESS_THAN_OR_EQUAL_OPERATOR additiveExpression:ad
+  {: RESULT = new BinaryExpr(re1, "<=", ad); :}
 |
-  NOT_EQUAL_OPERATOR
-  {: RESULT = "<>"; :}
+  relationalExpression:re1 GREATER_THAN_OR_EQUAL_OPERATOR additiveExpression:ad
+  {: RESULT = new BinaryExpr(re1, ">=", ad); :}
+;
+
+additiveExpression ::=
+  multiplicativeExpression:mu
+  {: RESULT = mu; :}
 |
-  OR_OPERATOR
-  {: RESULT = "||"; :}
+  additiveExpression:ad1 PLUS_OPERATOR multiplicativeExpression:mu
+  {: RESULT = new BinaryExpr(ad1, "+", mu); :}
 |
-  AND_OPERATOR
-  {: RESULT = "&&"; :}
+  additiveExpression:ad1 MINUS_OPERATOR multiplicativeExpression:mu
+  {: RESULT = new BinaryExpr(ad1, "-", mu); :}
+;
+
+multiplicativeExpression ::=
+  unaryExpression:u
+  {: RESULT = u; :}
+|
+  multiplicativeExpression:mu1 MULTIPLICATION_OPERATOR unaryExpression:u
+  {: RESULT = new BinaryExpr(mu1, "*", u); :}
+|
+  multiplicativeExpression:mu1 DIVISION_OPERATOR unaryExpression:u
+  {: RESULT = new BinaryExpr(mu1, "/", u); :}
+;
+
+unaryExpression ::=
+  postfixExpression:p
+  {: RESULT = p; :}
+|
+  TILDE_OPERATOR unaryExpression:u
+  {: RESULT = new UnaryExpr("~", u); :}
+|
+  MINUS_OPERATOR unaryExpression:u
+  {: RESULT = new UnaryExpr("-", u); :}
+|
+  PLUS_OPERATOR unaryExpression:u
+  {: RESULT = new UnaryExpr("+", u); :}
+;
+
+postfixExpression ::=
+  primaryExpression:p
+  {: RESULT = p; :}
+  // Handle postfix operators like ++ and -- if they are part of your language here
+;
+
+primaryExpression ::=
+  operandExpression:o
+  {: RESULT = o; :}
+  // Handle parentheses ( expr ) here to ensure proper precedence
+;
+
+operandExpression ::=
+  IDENTIFIER:i
+  {: RESULT = new OperandExpr(i, "Identifier"); :}
+|
+  INTEGER_LITERAL:n
+  {: RESULT = new OperandExpr(n, "Integer"); :}
+|
+  CHARACTER_LITERAL:c
+  {: RESULT = new OperandExpr(c, "Character"); :}
+|
+  STRING_LITERAL:s
+  {: RESULT = new OperandExpr(s, "String"); :}
+|
+  FLOATING_POINT_LITERAL:f
+  {: RESULT = new OperandExpr(f, "Float"); :}
+|
+  TRUE_KEYWORD
+  {: RESULT = new OperandExpr(true, "Boolean"); :}
+|
+  FALSE_KEYWORD
+  {: RESULT = new OperandExpr(false, "Boolean"); :}
 ;

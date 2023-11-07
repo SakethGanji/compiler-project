@@ -1,0 +1,138 @@
+class MyCompilerTest {
+
+    final int maxCount = 10;
+    bool isActive = true;
+    float threshold;
+
+    float calculate(float vals[], int n) {
+        int i = 0;
+        float sum = 0.0;
+        while (i < n) {
+            sum = sum + vals[i];
+            i++;
+        }
+        return sum;
+    }
+
+    void display() {
+        read(a,b,c, xy, zzz);
+        print("Current Count: ");
+        print(maxCount);
+        printline(" Done!");
+        printline(" D", "o", "n", "e!");
+        print(1,true, 48, 'a', aaa);
+
+        return "Done";
+    }
+
+    void main() {
+        float results[3];
+        int total = 5;
+        int messageCount = (total > 0) ? 1 : -1;
+        int nextCount = messageCount * 2;
+        int negCount = -nextCount;
+        char firstChar = (char)buffer[0];
+        float sum = calculate(results, 3);
+        int n = 3;
+        float average = (n > 0) ? (sum / n) : 0.0;
+
+        read(maxCount, isActive);
+        print("Average: ", average);
+        printline("Threshold: ", threshold);
+
+        {
+            int localMax = 100;
+            char status = 'A';
+            int i = 0;
+            display();
+            while (i < n) {
+                if (results[i] >= 0) {
+                    sum = sum + results[i];
+                } else {
+                    sum = sum - results[i];
+                }
+                i++;
+            }
+        }
+
+        nextCount--;
+        nextCount++;
+        print("First char of buffer: ", firstChar);
+        printline("Hello World!");
+
+        maxInt = 214748364;
+        minInt = -214748364;
+    }
+
+    int random(int x, bool y, char car, float e, int x){
+        int convert = (int) 'a';
+        if (x > 5) {
+         result = "greater";
+        } else {
+         result = "less";
+        }
+        while (x < 10) {
+         x = x + 1;
+        }
+        y = x * 2 + 3 ;
+        read(x, y);
+        print(x,5);
+        printline("Hello, world", x, y);
+        call();
+        functionName(x,y);
+        functionName("true",false, 5);
+        return;
+        return 5;
+        Name++;
+        saketh--;
+        test = ((((true))));
+    }
+
+    void tripleNestedWhileWithConditionals() {
+        int i = 0;
+        int j;
+        int k;
+        bool condition = true;
+        float nestedSum = 0.0;
+        float values[10];
+
+        while (i < 10) {
+            j = 0;
+            while (j < 10) {
+                k = 0;
+                while (k < 10) {
+                    if (values[k] >= 0) {
+                        nestedSum = nestedSum + values[k];
+                        if (nestedSum > 100) {
+                            print("Sum exceeded 100 at k=", k);
+                        }
+                    } else {
+                        if (values[k] < -10) {
+                            print("Value is less than -10 at k=", k);
+                        }
+                        nestedSum = nestedSum + values[k] / 2;
+                    }
+                    k++;
+                }
+                j++;
+            }
+            i++;
+        }
+        return;
+    }
+
+    void testOrderOfOperations() {
+        result1 = a * (b + c) / (d - e) + -f;
+        result2 = (g + h) * (i - j) / k + l;
+        result3 = m * (n + o / 2) - p * (q - r) / s;
+        result4 = t + u * v / (w / x) - y;
+        result5 = (z + aa * bb / (cc - dd) + ee) / (ff + gg - hh * ii);
+        result6 = jj < kk && ll > mm || nn <= oo && pp >= qq;
+        result7 = rr <> ss && tt == uu || vv < ww;
+        result8 = xx ? yy : zz;
+    }
+
+
+
+
+}

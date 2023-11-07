@@ -34,7 +34,6 @@ import java_cup.runtime.*;
  * PATTERN DEFINITIONS:
  */
 
-
 identifier = [A-Za-z][[A-Za-z][0-9]]*
 integer_literal = [0-9]+
 floating_point_literal = {integer_literal}\.[0-9]+
@@ -43,8 +42,8 @@ character_literal = \'{char_component}\'
 string = {char_component}*
 string_literal = \"{string}\"
 
-single_line_comment = \\\\.*\n
-multi_line_comment = \\\*(\\[^\*]|[^\\])*\*\\
+single_line_comment = \\\\.*(\n|\r|\r\n)
+multi_line_comment = \\\*([^\*]|(\*+[^\\]))*?\*\\
 whitespace = [ \n\t\r]
 
 

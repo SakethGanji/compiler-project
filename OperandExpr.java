@@ -2,29 +2,14 @@ public class OperandExpr extends Expr {
   String type;
   Object value;
 
-  public OperandExpr(int val) {
+  public OperandExpr(Object val, String t) {
     this.value = val;
-    this.type = "Integer";
+    this.type = t;
   }
 
-  public OperandExpr(char val) {
+  public OperandExpr(Object val) {
     this.value = val;
-    this.type = "Character";
-  }
-
-  public OperandExpr(String val) {
-    this.value = val;
-    this.type = "String";
-  }
-
-  public OperandExpr(double val) {
-    this.value = val;
-    this.type = "Float";
-  }
-
-  public OperandExpr(boolean val) {
-    this.value = val;
-    this.type = "Boolean";
+    this.type = val.getClass().getSimpleName();
   }
 
   public String toString(int t) {

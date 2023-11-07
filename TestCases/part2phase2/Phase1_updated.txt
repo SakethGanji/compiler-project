@@ -1,0 +1,9 @@
+class onlyMethods
+{
+	int Phase1OrderOfOps(){
+	    y = x * 2 + 3 ;
+        result8 = xx ? yy : zz;
+    }
+
+
+}

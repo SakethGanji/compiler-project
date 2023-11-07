@@ -1,56 +1,18 @@
-class MyCompilerTest {
-
-    final int maxCount = 10;
-    bool isActive = true;
-    float threshold;
-
-    float calculate(float vals[], int n) {
-        int i = 0;
-        float sum = 0.0;
-
-        while (i < n) {
-            if (vals[i] >= 0) {
-                sum = sum + vals[i];
-            } else {
-                sum = sum - vals[i];
-            }
-            i++;
-        }
-
-        return sum;
-    }
-
-    void display() {
-            print("Current Count: ");
-            print(maxCount);
-            printline(" Done!");
-        }
-
-
-    void main() {
-        float results[3];
-
-        int messageCount = (total > 0) ? 1 : -1;
-        int nextCount = messageCount * 2 ;
-
-        int negCount = -nextCount;
-
-        char firstChar = (char) buffer[0];
-        float average = (n > 0) ? (sum / n) : 0.0;
-
-        read(maxCount, isActive);
-        print("Average: ", "hi", "");
-        printline(average);
-
-        {
-            int localMax = 100;
-            char status = 'A';
-            display();
-        }
-
-        nextCount--;
-        nextCount++;
-
-
-    }
-}
+x = x;
+x = x();
+x = x(x,x);
+x = 1;
+x = 'a';
+x = "a";
+x = 1.1;
+x = true;
+x = false;
+x = (x);
+x = ~x;
+x = -x;
+x = +x;
+x = (int)x;
+x = x+x;
+x = x*x;
+x = x>x;
+x = (x?x:x);

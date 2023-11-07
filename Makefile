@@ -13,7 +13,7 @@ CP=.:$(CUPJAR)
 
 FILE = Lexer.java parser.java sym.java LexerTest.java ScannerTest.java
 
-.PHONY: default run part1 part2phase1 clean
+.PHONY: default run part1 part2phase1 part2phase2 clean
 
 # ===============
 # Build Rules
@@ -35,7 +35,7 @@ all: Lexer.java parser.java $(FILE:java=class)
 
 default: run
 
-run: part1 part2phase1
+run: part2phase2
 
 # ====================
 # Testing
@@ -44,20 +44,25 @@ run: part1 part2phase1
 # Java classes for testing
 P1_CLASS    = LexerTest
 P2P1_CLASS  = ScannerTest
+P2P2_CLASS  = ScannerTest
 # Directories containing test cases
 P1_DIR      = TestCases/part1/
 P2P1_DIR    = TestCases/part2phase1/
+P2P2_DIR    = TestCases/part2phase2/
 # List of test case names
 P1_TESTS    = basicTest basicFails basicRegex basicTerminals my_testcases
 P2_P1_TESTS = Phase1_expressions Phase1_order_of_ops Phase1_statements
+P2_P2_TESTS = Phase2_empty Phase2_fields Phase2_full Phase2_methods Phase2_myt1 Phase1_updated
 
 # individual part tests
 part1: $(addprefix $(P1_DIR), $(addsuffix .txt, $(P1_TESTS)))
 part2phase1: $(addprefix $(P2P1_DIR), $(addsuffix .txt, $(P2_P1_TESTS)))
+part2phase2: $(addprefix $(P2P2_DIR), $(addsuffix .txt, $(P2_P2_TESTS)))
 
 # Generate dependencies for test cases
 $(foreach test,$(P1_TESTS),$(eval $(test): $(P1_DIR)$(test).txt))
 $(foreach test,$(P2_P1_TESTS),$(eval $(test): $(P2P1_DIR)$(test).txt))
+$(foreach test,$(P2_P2_TESTS),$(eval $(test): $(P2P2_DIR)$(test).txt))
 
 # Rule for Part 1 test cases
 TestCases/part1/%.txt: all
@@ -68,6 +73,10 @@ TestCases/part1/%.txt: all
 TestCases/part2phase1/%.txt: all
 	$(JAVA) -cp $(CP) $(P2P1_CLASS) $@ > $(P2P1_DIR)$*-output.txt
 	$(call ECHO_AND_OUTPUT,$@,$(P2P1_DIR)$*-output.txt)
+
+TestCases/part2phase2/%.txt: all
+	$(JAVA) -cp $(CP) $(P2P2_CLASS) $@ > $(P2P2_DIR)$*-output.txt
+	$(call ECHO_AND_OUTPUT,$@,$(P2P2_DIR)$*-output.txt)
 
 # ====================
 # Utility Functions

@@ -1,8 +1,11 @@
-Compiler Project Phase 0
+Compiler Project Part 2
 ================
 ## Overview
 
-This project implements a lexer and a parser for a custom programming language.
+The primary objective of Part 2 in our compiler project is to validate the parsing 
+mechanism of our custom programming language and to ensure proper state transitions 
+within the parsing process. This is achieved by generating a formatted output derived 
+from the abstract syntax tree we construct.
 
 ## Prerequisites
 - JDK
@@ -11,43 +14,44 @@ This project implements a lexer and a parser for a custom programming language.
 
 ## Build and Run
 
-### Using the Makefile
-
-The project comes with a Makefile to automate the build and test process.
-
 #### Build the Project
 ```
 make all
 ```
 
-#### Run All Test Cases
+#### Test Cases in Part 2 Phase 2
+
+To Run All Test Cases:
+
 ```
 make run
 ```
 
-- For basicTest.txt:
+To Run Individual Test Cases:
+
+- For Phase2_empty.txt:
     ```
-    make run_basicTest
-    ```
-  
-- For basicRegex.txt:
-    ```
-    make run_basicRegex
-    ```
-  
-- For basicFails.txt:
-    ```
-    make run_basicFails
+    make run_Phase2_empty
     ```
 
-- For basicRegex.txt:
+- For Phase2_fields.txt:
     ```
-    make run_basicRegex
+    make run_Phase2_fields
     ```
 
-- For my_testcases.txt:
+- For Phase2_full.txt:
     ```
-    make run_my_testcases
+    make run_Phase2_full
+    ```
+
+- For Phase2_methods.txt:
+    ```
+    make run_Phase2_methods
+    ```
+
+- For Phase2_myt1.txt (my own testcase):
+    ```
+    make run_Phase2_myt1
     ```
 
 #### Clean the Project
