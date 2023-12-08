@@ -1,12 +1,12 @@
 public class Methoddecl extends Token {
-    private String returntype;
+    private Returntype returntype;
     private String identifier;
     private Argdecls argdecls;
     private Fielddecls fielddecls;
     private Stmts stmts;
     private Boolean optionalsemi;
 
-    public Methoddecl(String returntype, String identifier, Argdecls argdecls, Fielddecls fielddecls, Stmts stmts, Boolean optionalsemi) {
+    public Methoddecl(Returntype returntype, String identifier, Argdecls argdecls, Fielddecls fielddecls, Stmts stmts, Boolean optionalsemi) {
         this.returntype = returntype;
         this.identifier = identifier;
         this.argdecls = argdecls;

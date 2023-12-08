@@ -1,8 +1,8 @@
 public class TypeCastExpr extends Expr {
-    private String type;
+    private Type type;
     private Expr expr;
 
-    public TypeCastExpr(String type, Expr expr) {
+    public TypeCastExpr(Type type, Expr expr) {
         this.type = type;
         this.expr = expr;
     }

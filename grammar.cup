@@ -73,7 +73,7 @@ non terminal Optionalexpr optionalexpr;
 non terminal Methoddecl methoddecl;
 non terminal Boolean optionalsemi;
 non terminal Returntype returntype;
-non terminal String type;
+non terminal Type type;
 non terminal Argdecls argdecls;
 non terminal ArgdeclList argdeclList;
 non terminal Argdecl argdecl;
@@ -184,10 +184,10 @@ optionalexpr ::=
 
 methoddecl ::=
   type:t IDENTIFIER:i LEFT_PARENTHESIS argdecls:ad RIGHT_PARENTHESIS LEFT_BRACKET fielddecls:fd stmts:s RIGHT_BRACKET optionalsemi:os
-  {: RESULT = new Methoddecl(t, i, ad, fd, s, os); :}
+  {: RESULT = new Methoddecl(new Returntype(t), i, ad, fd, s, os); :}
 |
   VOID_KEYWORD IDENTIFIER:i LEFT_PARENTHESIS argdecls:ad RIGHT_PARENTHESIS LEFT_BRACKET fielddecls:fd stmts:s RIGHT_BRACKET optionalsemi:os
-  {: RESULT = new Methoddecl("void", i, ad, fd, s, os); :}
+  {: RESULT = new Methoddecl(new Returntype(), i, ad, fd, s, os); :}
 ;
 
 optionalsemi ::=
@@ -203,21 +203,21 @@ returntype ::=
   {: RESULT = new Returntype(t); :}
 |
   VOID_KEYWORD
-  {: RESULT = new Returntype("void"); :}
+  {: RESULT = new Returntype(); :}
 ;
 
 type ::=
   INTEGER_KEYWORD
-  {: RESULT = "int"; :}
+  {: RESULT = new Type("int"); :}
 |
   CHARACTER_KEYWORD
-  {: RESULT = "char"; :}
+  {: RESULT = new Type("char"); :}
 |
   BOOLEAN_KEYWORD
-  {: RESULT = "bool"; :}
+  {: RESULT = new Type("bool"); :}
 |
   FLOAT_KEYWORD
-  {: RESULT = "float"; :}
+  {: RESULT = new Type("float"); :}
 ;
 
 argdecls ::=

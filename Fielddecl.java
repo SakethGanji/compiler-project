@@ -1,11 +1,11 @@
 public class Fielddecl extends Token {
     private String optionalfinal;
-    private String type;
+    private Type type;
     private String identifier;
     private Optionalexpr optionalexpr;
     private Integer arrayLength;
 
-    public Fielddecl(String optionalfinal, String type, String identifier, Optionalexpr optionalexpr, Integer arrayLength) {
+    public Fielddecl(String optionalfinal, Type type, String identifier, Optionalexpr optionalexpr, Integer arrayLength) {
         this.optionalfinal = optionalfinal;
         this.type = type;
         this.identifier = identifier;

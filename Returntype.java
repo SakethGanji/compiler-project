@@ -1,11 +1,23 @@
 public class Returntype extends Token {
-    private String type;
+    private Type type;
+    private boolean isVoid;
 
-    public Returntype(String type) {
+    public Returntype(Type type) {
         this.type = type;
+        this.isVoid = false;
     }
 
-    public String toString(int t) {
-        return type;
+    public Returntype() {
+        this.type = null;
+        this.isVoid = true;
+    }
+
+    @Override
+    public String toString() {
+        if (isVoid) {
+            return "void";
+        } else {
+            return type.toString();
+        }
     }
 }
