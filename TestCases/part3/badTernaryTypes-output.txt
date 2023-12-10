@@ -1,0 +1,1 @@
+SemanticException: class<x>: void main: Types of true and false expressions in ternary operator must match, found: float and bool line: (true ? 1.0 : false)

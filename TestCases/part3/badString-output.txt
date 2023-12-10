@@ -1,0 +1,1 @@
+SemanticException: class<x>: void main: Operands of - must be int or float, found: String and String line: ("test" - "other")

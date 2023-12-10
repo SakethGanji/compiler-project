@@ -14,6 +14,14 @@ public class Fielddecls extends Token {
         fieldDeclarations.addAll(fds.fieldDeclarations);
     }
 
+    String typeCheck() throws SemanticException {
+        for (Fielddecl fd : fieldDeclarations) {
+            fd.typeCheck();
+        }
+
+        return null;
+    }
+
     public String toString(int t) {
         StringBuilder sb = new StringBuilder();
         for (Fielddecl fd : fieldDeclarations) {

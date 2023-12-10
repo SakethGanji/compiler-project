@@ -1,0 +1,2 @@
+SemanticException: class<x>: void main: Cannot increment variable of type: char line: y++;
+

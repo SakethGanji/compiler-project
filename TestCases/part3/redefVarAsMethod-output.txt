@@ -1,0 +1,1 @@
+SemanticException: class<x>: Method name 'y' conflicts with a variable name y in the scope

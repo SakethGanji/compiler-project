@@ -1,0 +1,78 @@
+class onlyMethods {
+	int Phase1Expressions() {
+		x = x;
+		x = x();
+		x = x(x, x);
+		x = 1;
+		x = a;
+		x = "a";
+		x = 1.1;
+		x = true;
+		x = false;
+		x = x;
+		x = (~x);
+		x = (-x);
+		x = (+x);
+		x = (int)x;
+		x = (x + x);
+		x = (x * x);
+		x = (x > x);
+		x = (x ? x : x);
+	}
+
+	int Phase1OrderOfOps() {
+		x = (1 + (2 * 3));
+		x = ((1 * 2) / 3);
+		x = ((1 + 2) - 3);
+		x = ((1 + 2) * 3);
+		x = (1 * (+2));
+		x = (1 / (-2));
+		x = (1 * (~2));
+		x = ((1 + 2) > 3);
+		x = ((((1 > 2) < 3) >= 4) <= 5);
+		x = ((((1 <= 2) >= 3) < 4) > 5);
+		x = (1 == (2 < 3));
+		x = ((1 == 2) <> 3);
+		x = (1 && (2 == 3));
+		x = (1 || (2 && 3));
+		x = ((1 || 2) ? (3 || 4) : (5 || 6));
+	}
+
+	int Phase1Statements() {
+		if (x) {
+			x = 0;
+		}
+		if (x) {
+			x = 0;
+		}
+		else {
+			x = 0;
+		}
+		while (x) {
+			x = 0;
+		}
+		x = 0;
+		read (x);
+		read (x, x);
+		print (x);
+		print ((x + 1), x);
+		printline (x););
+		printline ();
+		x();
+		x(x);
+		x(x, x);
+		return ;
+		return x;
+		x++;
+		x--;
+		{
+			x = 1;
+		}
+		{
+			x = 1;
+		};
+		{
+		}
+	}
+
+}

@@ -1,0 +1,1 @@
+SemanticException: class<x>: Type mismatch in field declaration 'y': Cannot assign bool to int

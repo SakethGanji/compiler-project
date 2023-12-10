@@ -1,0 +1,1 @@
+SemanticException: class<x>: int foo: Type mismatch: Cannot return type float in a method returning int

@@ -12,6 +12,19 @@ public class OperandExpr extends Expr {
     this.type = val.getClass().getSimpleName();
   }
 
+  public String typeCheck() throws SemanticException {
+    switch ((mapType(this.type)).toLowerCase()) {
+      case "int":
+      case "char":
+      case "string":
+      case "bool":
+      case "float":
+        return this.type;
+      default:
+        throw new SemanticException( (mapType(this.type)).toLowerCase());
+    }
+  }
+
   public String toString(int t) {
     return value.toString();
   }

@@ -1,0 +1,1 @@
+SemanticException: class<x>: void main: Bitwise NOT operator requires bool operand, found: char line: (~y)

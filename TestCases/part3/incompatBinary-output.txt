@@ -1,0 +1,1 @@
+SemanticException: class<x>: int main: Operands of || must be of type bool, found: float and float line: (y || y)

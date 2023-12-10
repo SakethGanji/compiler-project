@@ -11,8 +11,13 @@ public class Returntype extends Token {
         this.type = null;
         this.isVoid = true;
     }
+    String typeCheck() {
+        if (isVoid) {
+            return "void";
+        }
+        return type.toString();
+    }
 
-    @Override
     public String toString() {
         if (isVoid) {
             return "void";

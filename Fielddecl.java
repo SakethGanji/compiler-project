@@ -12,6 +12,46 @@ public class Fielddecl extends Token {
         this.optionalexpr = optionalexpr;
         this.arrayLength = arrayLength;
     }
+    String typeCheck() throws SemanticException {
+        boolean isFinal = "final".equals(optionalfinal);
+        boolean isArray = arrayLength != null;
+        VariableSymbol variableSymbol = new VariableSymbol(identifier, type.toString(), isArray, isFinal);
+        symbolTable.addVariable(identifier, variableSymbol);
+        String currentClassName = symbolTable.getCurrentClassName();
+        String currentMethodName = symbolTable.getCurrentMethod() != null ? symbolTable.getCurrentMethod().getName() : "[Unknown Method]";
+        String errorLocation = "class<" + symbolTable.getCurrentClassName() + ">: ";
+
+        if (isArray && arrayLength != null && arrayLength < 0) {
+            throw new SemanticException(errorLocation + "Array size must be a non-negative integer in declaration of " + identifier);
+        }
+
+        if (optionalexpr != null) {
+            String exprType = mapType(optionalexpr.typeCheck());
+
+            if (!"null".equals(exprType)) {
+                if (isArray) {
+                } else {
+                    if (exprType.endsWith("[]")) {
+                        throw new SemanticException(errorLocation + "Cannot assign array type to non-array field " + identifier);
+                    }
+                    if (!type.toString().equals(exprType) && !checkImplicitCoercion(type.toString(), exprType)) {
+                        throw new SemanticException(errorLocation + "Type mismatch in field declaration '" + identifier + "': Cannot assign " + exprType + " to " + type.toString());
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private boolean checkImplicitCoercion(String targetType, String sourceType) {
+        if ("float".equals(targetType) && "int".equals(sourceType)) {
+            return true;
+        }
+        if ("bool".equals(targetType) && "int".equals(sourceType)) {
+            return true;
+        }
+        return false;
+    }
 
     public String toString(int t) {
         StringBuilder sb = new StringBuilder();

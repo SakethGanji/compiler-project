@@ -16,6 +16,17 @@ public class ArgdeclList extends Token {
         }
     }
 
+    public List<Argdecl> getArgdecls() {
+        return argdecls;
+    }
+
+    public String typeCheck() throws SemanticException {
+        for (Argdecl argdecl : argdecls) {
+            argdecl.typeCheck();
+        }
+        return null;
+    }
+
     public String toString(int t) {
         StringBuilder sb = new StringBuilder();
         for (Argdecl a : argdecls) {

@@ -1,0 +1,1 @@
+SemanticException: class<x>: void main: Condition in ternary expression must be a boolean or coercible to boolean, found: float line: (1.0 ? true : false)

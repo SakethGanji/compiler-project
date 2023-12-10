@@ -1,0 +1,1 @@
+SemanticException: class<x>: void main: Type mismatch: Cannot assign char to float variable

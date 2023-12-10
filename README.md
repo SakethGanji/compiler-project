@@ -1,11 +1,5 @@
-Compiler Project Part 2
+Compiler Project Part 3
 ================
-## Overview
-
-The primary objective of Part 2 in our compiler project is to validate the parsing 
-mechanism of our custom programming language and to ensure proper state transitions 
-within the parsing process. This is achieved by generating a formatted output derived 
-from the abstract syntax tree we construct.
 
 ## Prerequisites
 - JDK
@@ -15,46 +9,132 @@ from the abstract syntax tree we construct.
 ## Build and Run
 
 #### Build the Project
-```
-make all
-```
-
-#### Test Cases in Part 2 Phase 2
-
-To Run All Test Cases:
-
-```
+```shell
 make run
 ```
 
-To Run Individual Test Cases:
+#### Test Cases in Part 3
 
-- For Phase2_empty.txt:
-    ```
-    make run_Phase2_empty
-    ```
+Testcase inputs and results are in ./TestCases
 
-- For Phase2_fields.txt:
-    ```
-    make run_Phase2_fields
-    ```
+To Run All Test Cases:
 
-- For Phase2_full.txt:
+```shell
+make part3
+```
+
+To run individual test cases, use the following format:
     ```
-    make run_Phase2_full
+    make <Test_Case_Name>
     ```
 
-- For Phase2_methods.txt:
-    ```
-    make run_Phase2_methods
+- For badDec.as:
+    ```shell
+    make badDec
     ```
 
-- For Phase2_myt1.txt (my own testcase):
+- For badInc.as:
+    ```shell
+    make badInc
     ```
-    make run_Phase2_myt1
+
+- For badNegation.as:
+    ```shell
+    make badNegation
+    ```
+
+- For badString.as:
+    ```shell
+    make badString
+    ```
+
+- For badTernaryCond.as:
+    ```shell
+    make badTernaryCond
+    ```
+
+- For badTernaryTypes.as:
+    ```shell
+    make badTernaryTypes
+    ```
+
+- For boolToFloat.as:
+    ```shell
+    make boolToFloat
+    ```
+
+- For boolToInt.as:
+    ```shell
+    make boolToInt
+    ```
+
+- For callNonExistFunc.as:
+    ```shell
+    make callNonExistFunc
+    ```
+
+- For charToFloat.as:
+    ```shell
+    make charToFloat
+    ```
+
+- For charToInt.as:
+    ```shell
+    make charToInt
+    ```
+
+- For floatToInt.as:
+    ```shell
+    make floatToInt
+    ```
+
+- For fullValidProgram.as:
+    ```shell
+    make fullValidProgram
+    ```
+
+- For incompatBinary.as:
+    ```shell
+    make incompatBinary
+    ```
+
+- For intArrayToBoolArray.as:
+    ```shell
+    make intArrayToBoolArray
+    ```
+
+- For noReturn.as:
+    ```shell
+    make noReturn
+    ```
+
+- For reassignFinal.as:
+    ```shell
+    make reassignFinal
+    ```
+
+- For redefMethod.as:
+    ```shell
+    make redefMethod
+    ```
+
+- For redefVar.as:
+    ```shell
+    make redefVar
+    ```
+
+- For redefVarAsMethod.as:
+    ```shell
+    make redefVarAsMethod
+    ```
+
+- For returnTypeBad.as:
+    ```shell
+    make returnTypeBad
     ```
 
 #### Clean the Project
-```
+
+```shell
 make clean
 ```

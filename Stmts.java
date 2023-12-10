@@ -13,6 +13,22 @@ class Stmts extends Token {
         statements.add(s);
         statements.addAll(ss.statements);
     }
+    String typeCheck() throws SemanticException {
+        for (Stmt statement : statements) {
+            statement.typeCheck();
+        }
+
+        return null;
+    }
+
+    public boolean hasReturnStatement() {
+        for (Stmt statement : statements) {
+            if (statement instanceof ReturnStmt) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public String toString(int t) {
         StringBuilder sb = new StringBuilder();

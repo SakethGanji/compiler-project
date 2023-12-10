@@ -1,0 +1,1 @@
+SemanticException: class<x>: Variable 'y' already declared in this scope or used as a method name

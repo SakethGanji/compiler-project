@@ -1,0 +1,1 @@
+SemanticException: class<x>: int main: Type mismatch: Cannot assign int to bool variable

@@ -18,6 +18,16 @@ public class Methoddecls extends Token {
         }
     }
 
+    String typeCheck() throws SemanticException {
+        for (Methoddecl md : methodDeclarations) {
+            md.typeCheck();
+        }
+        if (nextMethodDecls != null) {
+            nextMethodDecls.typeCheck();
+        }
+        return null;
+    }
+
     public String toString(int t) {
         StringBuilder sb = new StringBuilder();
         for (Methoddecl md : methodDeclarations) {

@@ -1,4 +1,4 @@
-public class Optionalfinal extends Token {
+public class Optionalfinal {
     private boolean isFinal;
 
     public Optionalfinal(boolean isFinal) {

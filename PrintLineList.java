@@ -5,6 +5,13 @@ public class PrintLineList extends Stmt {
         this.printList = printList;
     }
 
+    public String typeCheck() throws SemanticException {
+        if (printList != null) {
+            printList.typeCheck();
+        }
+        return null;
+    }
+
     public String toString(int t) {
         if (printList != null) {
             return printList.toString(0) + ");";

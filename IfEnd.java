@@ -9,6 +9,13 @@ public class IfEnd extends Stmt {
         this.elseBlock = null;
     }
 
+    public String typeCheck() throws SemanticException {
+        if (elseBlock != null) {
+            elseBlock.typeCheck();
+        }
+        return null;
+    }
+
     public String toString(int t) {
         if (elseBlock != null) {
             return getTabs(t) + "else {\n" +

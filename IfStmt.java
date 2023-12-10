@@ -9,6 +9,28 @@ public class IfStmt extends Stmt {
         this.ifEnd = ifEnd;
     }
 
+    public String typeCheck() throws SemanticException {
+        String condType = mapType(condition.typeCheck());
+        String errorLocation = "class<" + symbolTable.getCurrentClassName() + ">: " + symbolTable.getCurrentMethodReturnType() +  " " + symbolTable.getCurrentMethod().getName() + ": ";
+
+
+        if (!condType.equals("bool") && !canBeCoercedToBoolean(condType)) {
+            throw new SemanticException(errorLocation + "Type mismatch: Condition in if statement must be boolean or coercible to boolean, got " + condType);
+        }
+
+        thenBlock.typeCheck();
+        if (ifEnd != null) {
+            ifEnd.typeCheck();
+        }
+
+        return null;
+    }
+
+    private boolean canBeCoercedToBoolean(String type) {
+        return "int".equals(type) || "Integer".equals(type);
+    }
+
+
     public String toString(int t) {
         StringBuilder sb = new StringBuilder();
         sb.append("if (").append(condition.toString(0)).append(") {\n");

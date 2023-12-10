@@ -8,6 +8,21 @@ public class BlockStmt extends Stmt {
         this.stmts = stmts;
         this.optionalsemi = optionalsemi;
     }
+    String typeCheck() throws SemanticException {
+        symbolTable.enterScope();
+
+        if (fielddecls != null) {
+            fielddecls.typeCheck();
+        }
+
+        if (stmts != null) {
+            stmts.typeCheck();
+        }
+
+        symbolTable.exitScope();
+
+        return null;
+    }
 
     public String toString(int t) {
         String semi = optionalsemi ? ";" : "";

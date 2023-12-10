@@ -11,6 +11,14 @@ public class Memberdecl extends Token {
         this.fieldDeclaration = null;
         this.methodDeclaration = md;
     }
+    String typeCheck() throws SemanticException {
+        if (fieldDeclaration != null) {
+            fieldDeclaration.typeCheck();
+        } else if (methodDeclaration != null) {
+            methodDeclaration.typeCheck();
+        }
+        return null;
+    }
 
     public String toString(int t) {
         StringBuilder sb = new StringBuilder();
