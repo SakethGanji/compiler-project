@@ -1,140 +1,35 @@
-Compiler Project Part 3
+My Own Programming Language 
 ================
-
-## Prerequisites
-- JDK
-- JFlex
-- CUP 
-
-## Build and Run
-
-#### Build the Project
-```shell
-make run
+The grammar of my language:
 ```
-
-#### Test Cases in Part 3
-
-Testcase inputs and results are in ./TestCases
-
-To Run All Test Cases:
-
-```shell
-make part3
-```
-
-To run individual test cases, use the following format:
-    ```
-    make <Test_Case_Name>
-    ```
-
-- For badDec.as:
-    ```shell
-    make badDec
-    ```
-
-- For badInc.as:
-    ```shell
-    make badInc
-    ```
-
-- For badNegation.as:
-    ```shell
-    make badNegation
-    ```
-
-- For badString.as:
-    ```shell
-    make badString
-    ```
-
-- For badTernaryCond.as:
-    ```shell
-    make badTernaryCond
-    ```
-
-- For badTernaryTypes.as:
-    ```shell
-    make badTernaryTypes
-    ```
-
-- For boolToFloat.as:
-    ```shell
-    make boolToFloat
-    ```
-
-- For boolToInt.as:
-    ```shell
-    make boolToInt
-    ```
-
-- For callNonExistFunc.as:
-    ```shell
-    make callNonExistFunc
-    ```
-
-- For charToFloat.as:
-    ```shell
-    make charToFloat
-    ```
-
-- For charToInt.as:
-    ```shell
-    make charToInt
-    ```
-
-- For floatToInt.as:
-    ```shell
-    make floatToInt
-    ```
-
-- For fullValidProgram.as:
-    ```shell
-    make fullValidProgram
-    ```
-
-- For incompatBinary.as:
-    ```shell
-    make incompatBinary
-    ```
-
-- For intArrayToBoolArray.as:
-    ```shell
-    make intArrayToBoolArray
-    ```
-
-- For noReturn.as:
-    ```shell
-    make noReturn
-    ```
-
-- For reassignFinal.as:
-    ```shell
-    make reassignFinal
-    ```
-
-- For redefMethod.as:
-    ```shell
-    make redefMethod
-    ```
-
-- For redefVar.as:
-    ```shell
-    make redefVar
-    ```
-
-- For redefVarAsMethod.as:
-    ```shell
-    make redefVarAsMethod
-    ```
-
-- For returnTypeBad.as:
-    ```shell
-    make returnTypeBad
-    ```
-
-#### Clean the Project
-
-```shell
-make clean
+Program → class id { Memberdecls }
+Memberdecls → Fielddecls Methoddecls
+Fielddecls → Fielddecl Fielddecls | λ
+Methoddecls → Methoddecl Methoddecls | λ
+Fielddecl → Optionalfinal Type id Optionalexpr ;
+      | Type id [ intlit ] ;
+Optionalfinal → final | λ
+Optionalexpr → = Expr | λ
+Methoddecl → Returntype id ( Argdecls ) { Fielddecls Stmts } Optionalsemi
+Optionalsemi → ; | λ
+Returntype → Type | void
+Type → int | char | bool | float
+Argdecls → ArgdeclList | λ
+ArgdeclList → Argdecl , ArgdeclList | Argdecl
+Argdecl → Type id | Type id [ ]
+Stmts → Stmt Stmts | λ
+Stmt → if ( Expr ) Stmt IfEnd | while ( Expr ) Stmt | Name = Expr ;
+      | read ( Readlist ) ; | print ( Printlist ) ; | printline ( Printlinelist ) ;
+      | id ( ) ; | id ( Args ) ; | return ; | return Expr ; | Name ++ ; | Name -- ;
+      | { Fielddecls Stmts } Optionalsemi
+IfEnd → else Stmt | λ
+Name → id | id [ Expr ]
+Args → Expr , Args | Expr
+Readlist → Name , Readlist | Name
+Printlist → Expr , Printlist | Expr
+Printlinelist → Printlist | λ
+Expr → Name | id ( ) | id ( Args ) | intlit | charlit | strlit | floatlit | true | false
+      | ( Expr ) | ~ Expr | - Expr | + Expr | ( Type ) Expr |
+      | Expr Binaryop Expr | ( Expr ? Expr : Expr )
+Binaryop → * | / | + | - | < | > | <= | >= | == | <> | \|\| | &&
 ```
